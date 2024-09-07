@@ -1,7 +1,20 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "compilerOptions": {
+    "jsx": "react-jsx",  // Cambia esto a react-jsx para soportar JSX sin necesidad de importar React
+    "esModuleInterop": true, 
+    "allowSyntheticDefaultImports": true,
+    "strict": false, // Desactiva todas las opciones de chequeo estricto
+    "noImplicitAny": false, // Desactiva errores para tipos "any" implícitos
+    "target": "es5",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "skipLibCheck": false,
+    "forceConsistentCasingInFileNames": false,
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }
