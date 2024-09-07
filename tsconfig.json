@@ -1,4 +1,5 @@
 {
+  
   "compilerOptions": {
     "jsx": "react-jsx",  // Cambia esto a react-jsx para soportar JSX sin necesidad de importar React
     "esModuleInterop": true, 

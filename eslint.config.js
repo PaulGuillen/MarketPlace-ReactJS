@@ -23,6 +23,11 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
+      // Desactivamos las advertencias de variables no usadas
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': 'off', // También para TypeScript
+      // Puedes agregar otras reglas que quieras deshabilitar o personalizar
+      '@typescript-eslint/no-explicit-any': 'off', // Desactiva el warning de 'any' en TypeScript
     },
   },
 )
