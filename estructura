@@ -1,0 +1,54 @@
+src/
+│
+├── assets/                 # Archivos estáticos como imágenes, fuentes, etc.
+│
+├── components/             # Componentes reutilizables (botones, inputs, modales)
+│   ├── Button.tsx
+│   ├── Input.tsx
+│   └── Modal.tsx
+│
+├── config/                 # Configuraciones globales (como Firebase, rutas API, etc.)
+│   ├── firebaseConfig.js
+│   └── apiRoutes.js
+│
+├── features/               # Funcionalidades clave de tu aplicación
+│   ├── auth/               # Funcionalidad de autenticación
+│   │   ├── components/     # Componentes específicos de la autenticación
+│   │   ├── pages/          # Páginas relacionadas con la autenticación (Login, Registro)
+│   │   └── services/       # Lógica relacionada con autenticación (login, logout)
+│   │
+│   ├── products/           # Funcionalidad de productos (CRUD de productos)
+│   │   ├── components/     # Componentes específicos de productos (lista de productos)
+│   │   ├── pages/          # Páginas relacionadas con productos
+│   │   └── services/       # Lógica de comunicación con Firestore para productos
+│   │
+│   ├── cart/               # Funcionalidad del carrito de compras
+│   │   ├── components/     # Componentes de carrito (resumen, botón de pagar)
+│   │   └── services/       # Lógica del manejo del carrito
+│
+├── hooks/                  # Custom Hooks (para lógica compartida entre componentes)
+│   └── useAuth.js
+│
+├── layouts/                # Layouts generales (Navbar, Footer, etc.)
+│   ├── MainLayout.tsx
+│   └── AuthLayout.tsx
+│
+├── pages/                  # Páginas generales de la aplicación
+│   ├── HomePage.tsx
+│   ├── AboutPage.tsx
+│   └── ContactPage.tsx
+│
+├── routes/                 # Configuración de rutas de la aplicación
+│   └── AppRoutes.tsx
+│
+├── store/                  # Estado global (Redux, Context API)
+│   └── store.js
+│
+├── styles/                 # Archivos CSS globales o temas (si usas Styled Components)
+│   └── global.css
+│
+├── utils/                  # Funciones utilitarias (formateadores, validadores, etc.)
+│   └── formatPrice.js
+│
+├── App.tsx                 # Punto de entrada principal de la aplicación
+└── main.tsx                # Archivo principal donde se renderiza la aplicación
