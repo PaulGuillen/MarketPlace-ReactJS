@@ -1,15 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../config/firebaseConfig";
 import Button from "../../../components/button/Button";
 import Input from "../../../components/input/Input";
 import "./Login.css";
 import { validateEmail, validatePassword } from "../../../utils/Utils";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(""); // Definir el estado de error
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const preventGoBack = () => {
+      window.history.pushState(null, "", window.location.href); // Reemplaza la página actual en el historial
+    };
+
+    window.history.pushState(null, "", window.location.href); // Evita el retroceso al cargar la página
+    window.addEventListener("popstate", preventGoBack); // Escucha el evento de retroceso
+
+    return () => {
+      window.removeEventListener("popstate", preventGoBack); // Limpia el evento cuando el componente se desmonte
+    };
+  }, []);
 
   const handleLoginClick = async () => {
     setError(""); // Limpiamos los errores antes de la validación
@@ -32,6 +47,7 @@ const Login = () => {
         password
       );
       console.log("Usuario logueado:", userCredential.user);
+      navigate("/AvailableCategories"); 
       alert("Inicio de sesión exitoso");
     } catch (error: any) {
       setError("Error en inicio de sesión: " + error.message);
@@ -40,32 +56,35 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      <form>
-        <Input
-          type="email"
-          name="email"
-          placeholder="Ingresa tu correo"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-            setError(""); // Clear the error as the user types
-          }}
-        />
-        <Input
-          type="password"
-          name="password"
-          placeholder="Ingresa tu contraseña"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-            setError(""); // Clear the error as the user types
-          }}
-        />
-        {error && <p style={{ color: "red" }}>{error}</p>} {/* Mostrar error */}
-        <Button type="button" text="Ingresar" onClick={handleLoginClick} />
-      </form>
+    <div className="login-body">
+      <div className="login-container">
+        <h2>Login</h2>
+        <form>
+          <Input
+            type="email"
+            name="email"
+            placeholder="Ingresa tu correo"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setError(""); // Clear the error as the user types
+            }}
+          />
+          <Input
+            type="password"
+            name="password"
+            placeholder="Ingresa tu contraseña"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setError(""); // Clear the error as the user types
+            }}
+          />
+          {error && <p style={{ color: "red" }}>{error}</p>}{" "}
+          {/* Mostrar error */}
+          <Button type="button" text="Ingresar" onClick={handleLoginClick} />
+        </form>
+      </div>
     </div>
   );
 };

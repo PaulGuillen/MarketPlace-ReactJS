@@ -11,7 +11,7 @@
   border-radius: 4px;
   background-color: transparent;
   box-sizing: border-box;
-  line-height: 1.5; /* Asegura que el texto tenga una buena altura de línea */
+  line-height: 1.4; /* Asegura que el texto tenga una buena altura de línea */
   color: black; /* Color del texto*/
 }
 

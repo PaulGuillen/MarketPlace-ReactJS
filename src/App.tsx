@@ -1,12 +1,12 @@
-import './App.css'
-import Login from './features/auth/pages/Login'
+import { BrowserRouter as Router } from "react-router-dom";
+import AppRoutes from "./routes/AppRoutes";
 
-function App() {
+const App = () => {
   return (
-    <div>
-      <Login/>
-    </div>
-  )
-}
+    <Router>
+      <AppRoutes />
+    </Router>
+  );
+};
 
-export default App
+export default App;
