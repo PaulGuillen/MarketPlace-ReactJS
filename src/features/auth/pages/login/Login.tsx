@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../../config/firebaseConfig";
-import Button from "../../../components/button/Button";
-import Input from "../../../components/input/Input";
+import { auth } from "../../../../config/firebaseConfig";
+import Button from "../../../../components/button/Button";
+import Input from "../../../../components/input/Input";
 import "./Login.css";
-import { validateEmail, validatePassword } from "../../../utils/Utils";
+import { validateEmail, validatePassword } from "../../../../utils/Utils";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -57,35 +57,42 @@ const Login = () => {
 
   return (
     <div className="login-body">
-      <div className="login-container">
-        <h2>Login</h2>
-        <form>
-          <Input
-            type="email"
-            name="email"
-            placeholder="Ingresa tu correo"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-              setError(""); // Clear the error as the user types
-            }}
-          />
-          <Input
-            type="password"
-            name="password"
-            placeholder="Ingresa tu contraseña"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setError(""); // Clear the error as the user types
-            }}
-          />
-          {error && <p style={{ color: "red" }}>{error}</p>}{" "}
-          {/* Mostrar error */}
-          <Button type="button" text="Ingresar" onClick={handleLoginClick} />
-        </form>
+    <div className="login-container">
+      <h2>Login</h2>
+      <form>
+        <Input
+          type="email"
+          name="email"
+          placeholder="Ingresa tu correo"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <Input
+          type="password"
+          name="password"
+          placeholder="Ingresa tu contraseña"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        <Button type="button" text="Ingresar" onClick={handleLoginClick} />
+      </form>
+      <div className="links">
+        <p>
+          ¿Aún no tienes cuenta?{" "}
+          <span className="link" onClick={() => navigate("/register")}>
+            Regístrate
+          </span>
+        </p>
+        <p>
+          ¿Has olvidado tu contraseña?{" "}
+          <span className="link" onClick={() => navigate("/forgot-password")}>
+            Recuperar contraseña
+          </span>
+        </p>
       </div>
     </div>
+  </div>
   );
 };
 

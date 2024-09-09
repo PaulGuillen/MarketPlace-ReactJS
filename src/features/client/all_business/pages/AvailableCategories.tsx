@@ -1,6 +1,6 @@
 import "./AvailableCategories.css";
 import Button from "../../../../components/button/Button";
-import BackButton from "../../../../components/button/BackButtons";
+import BackButton from "../../../../components/back-button/BackButtons";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../../../../config/firebaseConfig"; // Asegúrate de importar correctamente tu configuración de Firebase
