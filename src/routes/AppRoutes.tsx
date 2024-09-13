@@ -1,8 +1,10 @@
 import { Routes, Route } from "react-router-dom";
-import AvailableCategories from "../features/client/all_business/pages/AvailableCategories";
+import AvailableCategories from "../features/client/pages/all_categories/AvailableCategories";
 import Login from "../features/auth/pages/login/Login";
 import Register from "../features/auth/pages/register/Register";
 import ForgotPassword from "../features/auth/pages/forgot_password/ForgotPassword";
+import SelectBusinessState from "../features/business/pages/state/SelectBusinessState";
+import RegisterBusiness from "../features/business/pages/register/RegisterBusiness";
 
 const AppRoutes = () => {
   return (
@@ -12,6 +14,8 @@ const AppRoutes = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/AvailableCategories" element={<AvailableCategories />} />
+      <Route path="/SelectBusinessState" element={<SelectBusinessState />} />
+      <Route path="/RegisterBusiness" element={<RegisterBusiness />} />
     </Routes>
   );
 };

@@ -1,4 +1,3 @@
-
 const AuthLayout = () => {
     return (
         <div>

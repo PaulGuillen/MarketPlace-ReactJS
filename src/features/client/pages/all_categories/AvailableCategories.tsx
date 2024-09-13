@@ -18,15 +18,21 @@ const AvailableCategories = () => {
     }
   };
 
+  const handleBusinessState = () => {
+    navigate("/SelectBusinessState"); // Navegar a la página de selección de estado del negocio
+  }
+
   return (
+    <div className="available-categories-body">
+    <BackButton onClick={handleLogoutAndNavigate} />
     <div className="available-categories-container">
-      <BackButton onClick={handleLogoutAndNavigate} /> 
       <h1>Selecciona tu categoría</h1>
       <div className="category-buttons">
-        <Button text="Cliente" />
-        <Button text="Negocio" />
+        <div className="option-card" onClick={() => navigate("/cliente")}>Cliente</div>
+        <div className="option-card" onClick={handleBusinessState}>Negocio</div>
       </div>
     </div>
+  </div>
   );
 };
 

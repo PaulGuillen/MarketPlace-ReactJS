@@ -1,17 +1,17 @@
 .input-group {
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 5px; 
 }
 
 .input-group input {
   width: 100%;
-  padding: 10px 5px; /* Ajustamos el padding para que el texto esté mejor alineado */
+  padding: 8px 5px;  /* Ajustamos el padding para que el texto esté mejor alineado */
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
   background-color: transparent;
   box-sizing: border-box;
-  line-height: 1.0; /* Asegura que el texto tenga una buena altura de línea */
+  line-height: 1.5; /* Asegura que el texto tenga una buena altura de línea */
   color: black; /* Color del texto*/
 }
 
@@ -23,7 +23,7 @@
 
 .input-group label {
   position: absolute;
-  top: 10px;
+  top: 22px;
   left: 5px;
   font-size: 16px;
   color: #aaa;
