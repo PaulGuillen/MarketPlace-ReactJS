@@ -3,8 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Para centrar verticalmente */
-    background-color: #f4f4f4; /* Color de fondo */
+    height: 100vh;
     position: relative;
   }
   

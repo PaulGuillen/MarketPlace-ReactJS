@@ -5,6 +5,8 @@ import { auth } from '../../../../config/firebaseConfig';
 import Button from "../../../../components/button/Button";
 import Input from "../../../../components/input/Input";
 import './ForgotPassword.css';
+import BackButton from '../../../../components/back-button/BackButtons';
+import Spacer from '../../../../components/spacer/Spacer';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -20,10 +22,17 @@ const ForgotPassword = () => {
     }
   };
 
+  const handleReturn = () => {
+    navigate("/"); // Navegar a la página principal
+  };
+
   return (
-    <div className="forgot-password-body">
+    <div>
+      <BackButton onClick={handleReturn} />
+      <div className="forgot-password-body">
       <div className="forgot-password-container">
         <h2>Recuperar Contraseña</h2>
+        <Spacer height="30px" />
         <Input
           type="email"
           name="email"
@@ -32,9 +41,12 @@ const ForgotPassword = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
         {message && <p>{message}</p>}
+        <Spacer height="30px" />
         <Button type="button" text="Recuperar contraseña" onClick={handlePasswordReset} />
       </div>
     </div>
+      </div>
+  
   );
 };
 

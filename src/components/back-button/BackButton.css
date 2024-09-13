@@ -1,21 +1,22 @@
 .back-button {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background-color: black;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 24px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .back-button:hover {
-    background-color: #333;
-  }
-  
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 16px; /* Reduce font size to ensure better centering */
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1; /* Ensure that text is properly aligned */
+  padding: 0; /* Remove padding for better centering */
+}
+
+.back-button:hover {
+  background-color: #333;
+}
