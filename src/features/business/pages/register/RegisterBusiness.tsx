@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./RegisterBusiness.css";
 import BackButton from "../../../../components/back-button/BackButtons";
 import Button from "../../../../components/button/Button";
 import { useNavigate } from "react-router-dom";
+import { getAuth } from "firebase/auth"; // Importar Firebase Auth
+import { doc, getDoc, setDoc } from "firebase/firestore"; // Importar Firestore
+import { db } from "../../../../config/firebaseConfig";// Asegúrate de que tienes configurada la instancia de Firestore
 
 const RegisterBusiness = () => {
   const navigate = useNavigate();
@@ -10,17 +13,57 @@ const RegisterBusiness = () => {
     dni: "",
     businessName: "",
     representative: "",
-    category: "",
   });
 
-  const handleChange = (e) => {
+  // Manejar cambios en el formulario
+  const handleChange = (e: { target: { name: any; value: any; }; }) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  // Manejar envío del formulario
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    // Manejo de la lógica de registro
-    console.log("Registro completado:", form);
+
+    // Obtener el usuario actual de FirebaseAuth
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (user) {
+      try {
+        // Obtener el documento del usuario en Firestore
+        const userDocRef = doc(db, "users", user.uid);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (userDocSnap.exists()) {
+          // Obtener el campo phone del documento del usuario
+          const { phone } = userDocSnap.data();
+
+          // Crear un nuevo documento en la colección "business" con los datos del formulario y el teléfono del usuario
+          const businessData = {
+            uid: user.uid,        // ID del usuario actual
+            fullName: user.displayName, // Nombre del usuario
+            email: user.email,    // Email del usuario
+            phone: phone,         // Teléfono del usuario desde Firestore
+            dni: form.dni,        // DNI del formulario
+            businessName: form.businessName, // Nombre de negocio del formulario
+            representative: form.representative, // Representante del formulario
+          };
+
+          // Guardar la información en Firestore en la colección "business"
+          await setDoc(doc(db, "business", user.uid), businessData);
+          console.log("Negocio registrado con éxito:", businessData);
+
+          // Redirigir a otra página
+          navigate("/SomeOtherRoute");
+        } else {
+          console.log("No se encontraron datos para este usuario en Firestore.");
+        }
+      } catch (error) {
+        console.error("Error al registrar el negocio:", error);
+      }
+    } else {
+      console.log("No hay usuario autenticado.");
+    }
   };
 
   return (
@@ -53,19 +96,6 @@ const RegisterBusiness = () => {
             onChange={handleChange}
             required
           />
-          <select
-            name="category"
-            value={form.category}
-            onChange={handleChange}
-            required
-          >
-            <option value="" disabled>
-              Categoría
-            </option>
-            <option value="categoria1">Categoría 1</option>
-            <option value="categoria2">Categoría 2</option>
-            <option value="categoria3">Categoría 3</option>
-          </select>
           <Button type="submit" text="Registrar" />
         </form>
       </div>

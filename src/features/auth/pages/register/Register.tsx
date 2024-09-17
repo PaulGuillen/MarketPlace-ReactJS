@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, updatePhoneNumber, updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../../../../config/firebaseConfig"; // Asegúrate de importar tu configuración de Firebase
 import "./Register.css";
@@ -65,35 +65,35 @@ const Register = () => {
         <div className="register-container">
           <h2>Registro</h2>
           <form>
-            <Input
+            <input
               type="text"
               name="fullName"
               placeholder="Nombre completo"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
             />
-            <Input
+            <input
               type="email"
               name="email"
               placeholder="Ingresa tu correo"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <Input
+            <input
               type="text"
               name="phone"
               placeholder="Número de teléfono"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
-            <Input
+            <input
               type="password"
               name="password"
               placeholder="Ingresa tu contraseña"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Input
+            <input
               type="password"
               name="confirmPassword"
               placeholder="Confirmar contraseña"

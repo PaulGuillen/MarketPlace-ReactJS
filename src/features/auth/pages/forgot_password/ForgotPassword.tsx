@@ -33,7 +33,7 @@ const ForgotPassword = () => {
       <div className="forgot-password-container">
         <h2>Recuperar Contraseña</h2>
         <Spacer height="30px" />
-        <Input
+        <input
           type="email"
           name="email"
           placeholder="Ingresa tu correo"

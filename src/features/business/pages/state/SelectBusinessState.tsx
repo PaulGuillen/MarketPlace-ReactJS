@@ -11,7 +11,7 @@ const SelectBusinessState = () => {
   };
 
   const handleLoginClick = () => {
-    // Navegar o hacer algo cuando se elija ingresar
+    navigate("/ValidateCodeBusiness");
   };
 
   const handleReturn = () => {

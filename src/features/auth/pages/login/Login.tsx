@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../../config/firebaseConfig";
 import Button from "../../../../components/button/Button";
-import Input from "../../../../components/input/Input";
 import "./Login.css";
 import { validateEmail, validatePassword } from "../../../../utils/Utils";
 import { useNavigate } from "react-router-dom";
@@ -48,7 +47,6 @@ const Login = () => {
       );
       console.log("Usuario logueado:", userCredential.user);
       navigate("/AvailableCategories"); 
-      alert("Inicio de sesión exitoso");
     } catch (error: any) {
       setError("Error en inicio de sesión: " + error.message);
       console.error("Error en inicio de sesión:", error.message);
@@ -60,14 +58,14 @@ const Login = () => {
     <div className="login-container">
       <h2>Login</h2>
       <form>
-        <Input
+        <input
           type="email"
           name="email"
           placeholder="Ingresa tu correo"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <Input
+        <input
           type="password"
           name="password"
           placeholder="Ingresa tu contraseña"
