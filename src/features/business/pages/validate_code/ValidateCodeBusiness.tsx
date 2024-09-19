@@ -11,6 +11,8 @@ const ValidateCodeBusiness = () => {
   const [code, setCode] = useState("");
   const [generatedCode, setGeneratedCode] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [seconds, setSeconds] = useState(30); // 30 segundos para reenviar código
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true); // Estado del botón
   const navigate = useNavigate();
 
   // Obtener el usuario actual
@@ -38,40 +40,56 @@ const ValidateCodeBusiness = () => {
       });
   };
 
-  // Memoizar la función para evitar recrearla en cada render
+  // Ahora siempre se sobrescribirá el código en Firestore y se enviará uno nuevo
   const sendCodeToFirestore = useCallback(
     async (code: string) => {
       if (user) {
         const userEmail = user.email;
-        const userRef = doc(db, "verificationCodes", user.uid); // Guardar el código en Firestore
+        const userRef = doc(db, "verificationCodes", user.uid);
         try {
+          // Sobrescribir el código en Firestore
           await setDoc(userRef, {
             email: userEmail,
             verificationCode: code,
             createdAt: new Date(),
           });
 
-          // Enviar el correo con el código al usuario
+          // Enviar el correo con el nuevo código
           sendCodeByEmail(userEmail, code);
-
-          console.log("Código guardado en Firestore y enviado por correo:", code + " para el usuario: " + userEmail);
+          console.log("Nuevo código guardado en Firestore y enviado por correo:", code + " para el usuario: " + userEmail);
         } catch (error) {
           console.error("Error al guardar el código en Firestore o enviar el correo:", error);
         }
       }
     },
-    [user] // Se asegura de que sólo cambie si `user` cambia
+    [user]
   );
 
-  // Enviar código automáticamente al cargar la UI
+  // Temporizador para habilitar el botón de reenviar código
   useEffect(() => {
+    if (seconds > 0) {
+      const timer = setInterval(() => {
+        setSeconds(seconds - 1);
+      }, 1000);
+
+      return () => clearInterval(timer);
+    } else {
+      setIsButtonDisabled(false); // Habilitar el botón al llegar a 0
+    }
+  }, [seconds]);
+
+  // Reenviar código y reiniciar el temporizador
+  const handleResendCode = () => {
     if (user) {
       const newCode = generateCode();
-      setGeneratedCode(newCode); // Guardar el código generado en el estado
-      sendCodeToFirestore(newCode); // Guardar en Firestore y enviar por correo
-      console.log("Código generado y enviado al correo automáticamente:", newCode);
+      setGeneratedCode(newCode);
+      sendCodeToFirestore(newCode); // Siempre enviará un nuevo código
+
+      // Reiniciar temporizador
+      setSeconds(30);
+      setIsButtonDisabled(true); // Deshabilitar el botón nuevamente
     }
-  }, [user, sendCodeToFirestore]);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,7 +102,7 @@ const ValidateCodeBusiness = () => {
 
         if (storedCode === code) {
           alert("Código validado correctamente.");
-          navigate("/SomeNextPage");
+          navigate("/BusinessManagement");
         } else {
           setErrorMessage("El código ingresado es incorrecto.");
         }
@@ -109,13 +127,28 @@ const ValidateCodeBusiness = () => {
             className="code-input"
           />
           <p>
-            Se te olvidó el correo?, enviar el código a mi número de teléfono
+            ¿Olvidaste el correo? Enviar el código a mi número de teléfono
           </p>
           {errorMessage && <p className="error-message">{errorMessage}</p>}
           <button type="submit" className="validate-button">
             Validar
           </button>
         </form>
+
+        <div className="resend-section">
+          <p>
+            {isButtonDisabled
+              ? `Reenviar código en ${seconds} segundos...`
+              : "Puedes reenviar el código ahora."}
+          </p>
+          <button
+            className="resend-button"
+            onClick={handleResendCode}
+            disabled={isButtonDisabled}
+          >
+            Reenviar código
+          </button>
+        </div>
       </div>
     </div>
   );
