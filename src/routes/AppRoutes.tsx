@@ -6,7 +6,8 @@ import ForgotPassword from "../features/auth/pages/forgot_password/ForgotPasswor
 import SelectBusinessState from "../features/business/pages/state/SelectBusinessState";
 import RegisterBusiness from "../features/business/pages/register/RegisterBusiness";
 import ValidateCodeBusiness from "../features/business/pages/validate_code/ValidateCodeBusiness";
-import BusinessManagement from "../features/business/pages/management/BusinessManagement";
+import Company from "../features/business/pages/management/company/Company";
+
 
 const AppRoutes = () => {
   return (
@@ -19,7 +20,7 @@ const AppRoutes = () => {
       <Route path="/SelectBusinessState" element={<SelectBusinessState />} />
       <Route path="/ValidateCodeBusiness" element={<ValidateCodeBusiness />} />
       <Route path="/RegisterBusiness" element={<RegisterBusiness />} />
-      <Route path="/BusinessManagement" element={<BusinessManagement />} />
+      <Route path="/Company" element={<Company />} />
     </Routes>
   );
 };

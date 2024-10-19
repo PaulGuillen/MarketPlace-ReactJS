@@ -69,7 +69,7 @@ const RegisterBusiness = () => {
           console.log("Negocio registrado con éxito:", businessData);
 
           // Redirigir a otra página
-          navigate("/BusinessManagement");
+          navigate("/Company");
         } else {
           setErrorMessage("No se encontraron datos para este usuario en Firestore.");
         }

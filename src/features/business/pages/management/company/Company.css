@@ -1,0 +1,96 @@
+.company-body {
+  height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.logo-preview {
+  width: 200px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.logo-upload {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 250px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.logo-upload img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.logo-upload input[type="file"] {
+  display: none;
+}
+
+.upload-icon {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  cursor: pointer;
+  color: #007bff;
+  font-size: 1.5rem;
+}
+
+.upload-icon:hover {
+  text-decoration: underline;
+}
+
+.information-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-top: 20px;
+
+}
+
+.info-block {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+}
+
+.info-block input {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.vertical-divider {
+  width: 1px;
+  height: 100%;
+  background-color: #ccc;
+  margin: 0 20px;
+}
+
+.container-button {
+  display: flex;
+  justify-content: center;
+}
+
+.save-button {
+  padding: 20px;
+  background-color: #007bff;
+  color: white;
+  width: 24%;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 20px;
+}
+
+.save-button:hover {
+  background-color: #0056b3;
+}

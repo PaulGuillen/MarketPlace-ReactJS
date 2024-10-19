@@ -102,7 +102,7 @@ const ValidateCodeBusiness = () => {
 
         if (storedCode === code) {
           alert("Código validado correctamente.");
-          navigate("/BusinessManagement");
+          navigate("/Company");
         } else {
           setErrorMessage("El código ingresado es incorrecto.");
         }
