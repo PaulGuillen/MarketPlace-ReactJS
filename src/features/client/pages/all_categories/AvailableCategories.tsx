@@ -19,7 +19,7 @@ const AvailableCategories = () => {
   };
 
   const handleBusinessState = () => {
-    navigate("/SelectBusinessState"); // Navegar a la página de selección de estado del negocio
+    navigate("/selectBusinessState"); // Navegar a la página de selección de estado del negocio
   }
 
   return (

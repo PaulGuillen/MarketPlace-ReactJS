@@ -102,7 +102,7 @@ const ValidateCodeBusiness = () => {
 
         if (storedCode === code) {
           alert("Código validado correctamente.");
-          navigate("/Company");
+          navigate("/company");
         } else {
           setErrorMessage("El código ingresado es incorrecto.");
         }
@@ -114,7 +114,7 @@ const ValidateCodeBusiness = () => {
 
   return (
     <div className="validate-code-container">
-      <BackButton onClick={() => navigate("/SelectBusinessState")} />
+      <BackButton onClick={() => navigate("/selectBusinessState")} />
 
       <div className="validate-card">
         <h2>Validación</h2>

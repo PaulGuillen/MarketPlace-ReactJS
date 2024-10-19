@@ -7,15 +7,15 @@ const SelectBusinessState = () => {
   const navigate = useNavigate();
 
   const handleRegisterClick = () => {
-    navigate("/RegisterBusiness"); // Navegar a la página de registro de negocio
+    navigate("/registerBusiness"); // Navegar a la página de registro de negocio
   };
 
   const handleLoginClick = () => {
-    navigate("/ValidateCodeBusiness");
+    navigate("/validateCodeBusiness");
   };
 
   const handleReturn = () => {
-    navigate("/AvailableCategories"); // Navegar a la página principal
+    navigate("/availableCategories"); // Navegar a la página principal
   };
 
   return (

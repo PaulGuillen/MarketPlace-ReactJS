@@ -46,7 +46,7 @@ const Login = () => {
         password
       );
       console.log("Usuario logueado:", userCredential.user);
-      navigate("/AvailableCategories"); 
+      navigate("/availableCategories"); 
     } catch (error: any) {
       setError("Error en inicio de sesión: " + error.message);
       console.error("Error en inicio de sesión:", error.message);

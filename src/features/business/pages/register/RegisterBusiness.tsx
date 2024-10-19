@@ -69,7 +69,7 @@ const RegisterBusiness = () => {
           console.log("Negocio registrado con éxito:", businessData);
 
           // Redirigir a otra página
-          navigate("/Company");
+          navigate("/company");
         } else {
           setErrorMessage("No se encontraron datos para este usuario en Firestore.");
         }
@@ -85,7 +85,7 @@ const RegisterBusiness = () => {
 
   return (
     <div className="register-business-body">
-      <BackButton onClick={() => navigate("/SelectBusinessState")} />
+      <BackButton onClick={() => navigate("/selectBusinessState")} />
       <div className="register-business-container">
         <h2>Debes completar estos campos para continuar</h2>
         <form onSubmit={handleSubmit} className="register-form">

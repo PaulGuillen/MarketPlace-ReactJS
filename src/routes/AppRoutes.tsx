@@ -7,6 +7,8 @@ import SelectBusinessState from "../features/business/pages/state/SelectBusiness
 import RegisterBusiness from "../features/business/pages/register/RegisterBusiness";
 import ValidateCodeBusiness from "../features/business/pages/validate_code/ValidateCodeBusiness";
 import Company from "../features/business/pages/management/company/Company";
+import Product from "../features/business/pages/management/product/Product";
+import Order from "../features/business/pages/management/order/Order";
 
 
 const AppRoutes = () => {
@@ -16,11 +18,13 @@ const AppRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/AvailableCategories" element={<AvailableCategories />} />
-      <Route path="/SelectBusinessState" element={<SelectBusinessState />} />
-      <Route path="/ValidateCodeBusiness" element={<ValidateCodeBusiness />} />
-      <Route path="/RegisterBusiness" element={<RegisterBusiness />} />
-      <Route path="/Company" element={<Company />} />
+      <Route path="/availableCategories" element={<AvailableCategories />} />
+      <Route path="/selectBusinessState" element={<SelectBusinessState />} />
+      <Route path="/validateCodeBusiness" element={<ValidateCodeBusiness />} />
+      <Route path="/registerBusiness" element={<RegisterBusiness />} />
+      <Route path="/company" element={<Company />} />
+      <Route path="/products-business" element={<Product/>} />
+      <Route path="/orders-business" element={<Order />} />
     </Routes>
   );
 };
