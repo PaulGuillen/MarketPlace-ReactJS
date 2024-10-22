@@ -9,13 +9,14 @@ import ValidateCodeBusiness from "../features/business/pages/validate_code/Valid
 import Company from "../features/business/pages/management/company/Company";
 import Product from "../features/business/pages/management/product/Product";
 import Order from "../features/business/pages/management/order/Order";
+import Home from "../features/client/pages/home/Home";
 
 
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Home />} />
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/availableCategories" element={<AvailableCategories />} />
