@@ -12,7 +12,6 @@ const Home = () => {
   const [images, setImages] = useState<CarouselImage[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Función para cargar las imágenes desde Firebase
   useEffect(() => {
     const loadImages = async () => {
       const fetchedImages = await fetchCarouselImages();
@@ -28,15 +27,17 @@ const Home = () => {
   }, [images.length]);
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + images.length) % images.length
+    );
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
       handleNext();
-    }, CAROUSEL_INTERVAL); 
+    }, CAROUSEL_INTERVAL);
 
-    return () => clearInterval(interval); 
+    return () => clearInterval(interval);
   }, [handleNext]);
 
   return (
@@ -47,7 +48,11 @@ const Home = () => {
           <button className="location-button">📍 Ingresa tu ubicación</button>
         </div>
         <div className="navbar-center">
-          <input type="text" placeholder="Buscar Productos" className="search-bar" />
+          <input
+            type="text"
+            placeholder="Buscar Productos"
+            className="search-bar"
+          />
         </div>
         <div className="navbar-right">
           <button className="login-button">¡Hola! Inicia sesión</button>
