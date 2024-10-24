@@ -1,14 +1,16 @@
 import { useEffect, useState, useCallback } from "react";
 import "./Home.css";
-import { fetchCarouselImages } from "../../services/HomeService";
-import { CarouselImage } from "../../../client/model/CarouselImage";
+import { fetchCarouselImages, fetchCategories } from "../../services/HomeService";
+import { CarouselImage } from "../../../model/CarouselImage";
 import { CAROUSEL_INTERVAL } from "../../../../utils/Constants";
 import NavBarHome from "../../components/NavBarHome";
 import IconSection from "../../components/IconSection";
+import { CategoriesHome } from "features/model/CategoriesHome";
 import Category from "../../components/Category";
 
 const Home = () => {
   const [images, setImages] = useState<CarouselImage[]>([]);
+  const [categories, setCategories] = useState<CategoriesHome[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -18,7 +20,14 @@ const Home = () => {
       console.log(fetchedImages);
     };
 
+    const loadCategories = async () => {
+      const fetchedCategories = await fetchCategories();
+      setCategories(fetchedCategories);
+      console.log(fetchedCategories);
+    };
+
     loadImages();
+    loadCategories();
   }, []);
 
   const handleNext = useCallback(() => {
@@ -30,16 +39,6 @@ const Home = () => {
       (prevIndex) => (prevIndex - 1 + images.length) % images.length
     );
   };
-
-  const categories = [
-    { title: 'Electrodomésticos', type: 'Ofertas' },
-    { title: 'Computadoras', type: 'Tecnología' },
-    { title: 'Muebles', type: 'Hogar' },
-    { title: 'Moda', type: 'Vestimenta' },
-    { title: 'Electrodomésticos', type: 'Ofertas' },
-    { title: 'Computadoras', type: 'Tecnología' },
-    // Agrega más categorías si es necesario
-  ];
 
   useEffect(() => {
     const interval = setInterval(() => {

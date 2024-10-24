@@ -1,3 +1,4 @@
+import { truncateText } from "../../../utils/Utils";
 import "../../../styles/Category.css";
 
 const Category = ({ categories }) => {
@@ -5,8 +6,9 @@ const Category = ({ categories }) => {
     <section className="category-list">
       {categories.map((category, index) => (
         <div className="category-card" key={index}>
-          <h3 className="category-title">{category.title}</h3>
-          <p className="category-type">{category.type}</p>
+          <h3 className="category-title">
+            {category.title}
+            </h3>
         </div>
       ))}
     </section>
