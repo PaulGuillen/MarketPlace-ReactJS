@@ -1,0 +1,26 @@
+.icon-container {
+    background-color: #ddd;
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.icon-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon-item img {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.icon-item p {
+    font-size: 0.9rem;
+    color: #333;
+    margin: 0;
+    vertical-align: middle;
+}
