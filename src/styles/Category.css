@@ -44,6 +44,8 @@
     font-weight: bold;
     white-space: normal;
     text-align: center;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }

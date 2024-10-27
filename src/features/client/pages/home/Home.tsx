@@ -4,6 +4,7 @@ import IconSection from "../../components/IconSection";
 import Category from "../../components/Category";
 import BannerSection from "../../components/BannerSection";
 import { CategoriesHome } from "../../../../features/model/CategoriesHome";
+import StoresSection from "../../components/StoresSection";
 
 const Home = () => {
   
@@ -17,6 +18,7 @@ const Home = () => {
       <IconSection />
       <BannerSection />
       <Category onCategorySelect={handleCategorySelect} />
+      <StoresSection />
     </div>
   );
 };
