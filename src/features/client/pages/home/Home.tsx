@@ -6,6 +6,7 @@ import BannerSection from "../../components/BannerSection";
 import { CategoriesHome } from "../../../../features/model/CategoriesHome";
 import StoresSection from "../../components/StoresSection";
 import BestSellersSection from "../../components/BestSellersSection";
+import ViralSection from "../../components/ViralSection";
 
 const Home = () => {
   
@@ -21,6 +22,7 @@ const Home = () => {
       <Category onCategorySelect={handleCategorySelect} />
       <StoresSection />
       <BestSellersSection />
+      <ViralSection />
     </div>
   );
 };

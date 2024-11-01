@@ -1,16 +1,16 @@
-.best-sellers-section {
+.viral-section {
     text-align: center;
     padding-bottom: 20px;
 }
 
-.best-sellers-list {
+.viral-list {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 20px;
 }
 
-.best-seller-card {
+.viral-card {
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 16px;
@@ -24,7 +24,7 @@
     animation: fadeInFromCenter 0.5s ease-out;
 }
 
-.best-seller-card:hover {
+.viral-card:hover {
     transform: scale(1.05);
 }
 
@@ -72,20 +72,4 @@
     position: absolute;
     top: 10px;
     left: 10px;
-}
-
-.add-to-cart-button {
-    background-color: #ff0099;
-    color: #fff;
-    border: none;
-    padding: 10px;
-    margin: 10px auto;
-    cursor: pointer;
-    border-radius: 5px;
-    display: block;
-    width: fit-content;
-}
-
-.add-to-cart-button:hover {
-    background-color: #e60085;
 }

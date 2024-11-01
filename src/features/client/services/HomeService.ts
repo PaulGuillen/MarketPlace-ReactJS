@@ -45,13 +45,26 @@ export const fetchStores = async (): Promise<Store[]> => {
 
 export const fetchBestSellers = async (): Promise<Product[]> => {
   try {
-    const bestSellersCollection = collection(db, "products");
-    const bestSellersSnapshot = await getDocs(bestSellersCollection);
-    return bestSellersSnapshot.docs
+    const productsCollection = collection(db, "products");
+    const productsSnapshot = await getDocs(productsCollection);
+    return productsSnapshot.docs
       .map(doc => ({ id: doc.id, ...doc.data() as Product }))
       .filter(product => product.bestSelling === true);
   } catch (error) {
     console.error("Error fetching best sellers: ", error);
+    return [];
+  }
+};
+
+export const fetchVirals = async (): Promise<Product[]> => {
+  try {
+    const productsCollection = collection(db, "products");
+    const productsSnapshot = await getDocs(productsCollection);
+    return productsSnapshot.docs
+      .map(doc => ({ id: doc.id, ...doc.data() as Product }))
+      .filter(product => product.isViral === true);
+  } catch (error) {
+    console.error("Error fetching virals products: ", error);
     return [];
   }
 };
