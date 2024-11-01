@@ -7,6 +7,7 @@ import { CategoriesHome } from "../../../../features/model/CategoriesHome";
 import StoresSection from "../../components/StoresSection";
 import BestSellersSection from "../../components/BestSellersSection";
 import ViralSection from "../../components/ViralSection";
+import FooterSection from "../../components/FooterSection";
 
 const Home = () => {
   
@@ -23,6 +24,7 @@ const Home = () => {
       <StoresSection />
       <BestSellersSection />
       <ViralSection />
+      <FooterSection />
     </div>
   );
 };
