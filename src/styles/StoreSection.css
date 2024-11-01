@@ -1,11 +1,13 @@
+.store-section {
+  text-align: center;
+  padding-bottom: 20px;
+}
+
 .store-list {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 20px;
-  overflow-x: auto;
-  padding: 20px;
-  box-sizing: border-box;
 }
 
 .store-list::-webkit-scrollbar {

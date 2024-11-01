@@ -19,18 +19,24 @@ const StoresSection = () => {
 
   /**NEED LOGIC TO VALIDATE IF BUSINES HAVE A BRAND OR NOT? */
   return (
-    <section className="store-list">
-      {stores.map((store, index) => (
-        <div className="store-card" key={index}>
-          <div
-            className="store-image"
-            style={{ backgroundImage: `url(${store.imageUrl})` }}
-          ></div>
-          <Divider height="2px" /> 
-          <h3 className="store-title">{store.title}</h3>
-        </div>
-      ))}
-    </section>
+    <div className="store-section">
+      <h2 className="store-title">Nuestras Tiendas</h2>
+      <p className="store-description">
+        Encuentra nuestras tiendas a lo largo de Perú
+      </p>
+      <div className="store-list">
+        {stores.map((store, index) => (
+          <div className="store-card" key={index}>
+            <div
+              className="store-image"
+              style={{ backgroundImage: `url(${store.imageUrl})` }}
+            ></div>
+            <Divider height="2px" />
+            <h3 className="store-title">{store.title}</h3>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 

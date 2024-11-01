@@ -21,7 +21,6 @@
     border: 2px solid #cfd1cf;
     transition: transform 0.3s ease;
     position: relative;
-    animation: fadeInFromCenter 0.5s ease-out;
 }
 
 .viral-card:hover {
