@@ -4,6 +4,7 @@ import { db } from "../../../config/firebaseConfig";
 import { CarouselImage } from "../../model/CarouselImage";
 import { CategoriesHome } from "../../model/CategoriesHome";
 import { Store } from "../../model/Store";
+import { Product } from "../../model/Product";
 
 
 export const fetchCarouselImages = async (): Promise<CarouselImage[]> => {
@@ -38,6 +39,19 @@ export const fetchStores = async (): Promise<Store[]> => {
   }
   catch (error) {
     console.error("Error fetching stores: ", error);
+    return [];
+  }
+};
+
+export const fetchBestSellers = async (): Promise<Product[]> => {
+  try {
+    const bestSellersCollection = collection(db, "products");
+    const bestSellersSnapshot = await getDocs(bestSellersCollection);
+    return bestSellersSnapshot.docs
+      .map(doc => ({ id: doc.id, ...doc.data() as Product }))
+      .filter(product => product.bestSelling === true);
+  } catch (error) {
+    console.error("Error fetching best sellers: ", error);
     return [];
   }
 };
