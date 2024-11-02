@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../../../../config/firebaseConfig';
 import Button from "../../../../components/button/Button";
-import Input from "../../../../components/input/Input";
 import './ForgotPassword.css';
 import BackButton from '../../../../components/back-button/BackButtons';
 import Spacer from '../../../../components/spacer/Spacer';

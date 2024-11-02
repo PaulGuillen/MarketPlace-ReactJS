@@ -1,4 +1,5 @@
 
+import { Link } from "react-router-dom";
 import "../../../styles/NavbarHome.css"; 
 
 const NavBarHome = () => {
@@ -16,7 +17,7 @@ const NavBarHome = () => {
           />
         </div>
         <div className="navbar-right">
-          <button className="login-button">¡Hola! Inicia sesión</button>
+          <Link to="/clientLogin" className="login-button">¡Hola! Inicia sesión</Link>
           <button className="cart-button">🛒</button>
         </div>
       </header>

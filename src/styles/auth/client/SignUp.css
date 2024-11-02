@@ -1,0 +1,123 @@
+.main-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f2f2f7;
+}
+
+.signup-container {
+  max-width: 400px;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.signup-container h2 {
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.signup-container p {
+  font-size: 16px;
+  color: #800080;
+  margin-bottom: 20px;
+}
+
+.signup-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.signup-container label {
+  width: 100%;
+  font-size: 14px;
+  color: #555;
+  text-align: left;
+}
+
+.signup-container input[type="text"],
+.signup-container input[type="tel"],
+.signup-container input[type="email"],
+.signup-container input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.signup-container .checkbox-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.signup-container .checkbox-container input[type="checkbox"] {
+  margin-right: 10px;
+  margin-top: 0;
+  width: 18px;
+  height: 18px;
+}
+
+.signup-container .checkbox-label {
+  font-size: 12px;
+  color: #555;
+  line-height: 1.5;
+}
+
+.signup-container .checkbox-label a {
+  color: #800080;
+  text-decoration: underline;
+}
+
+.signup-container button {
+  width: 100%;
+  padding: 12px;
+  background-color: #800080;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+  justify-content: center;
+  align-items: center; 
+  text-align: center;
+}
+
+.signup-container button:hover {
+  background-color: #670067;
+}
+
+.signup-container a {
+  color: #800080;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.signup-container a:hover {
+  text-decoration: underline;
+}
+
+.signup-container .privacy-links {
+  font-size: 12px;
+  color: #555;
+  margin-top: 5px;
+}
+
+.signup-container .privacy-links a {
+  color: #800080;
+  text-decoration: underline;
+}
