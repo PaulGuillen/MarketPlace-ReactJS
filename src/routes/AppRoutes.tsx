@@ -11,6 +11,7 @@ import Order from "../features/business/pages/management/order/Order";
 import Home from "../features/client/pages/home/Home";
 import Login from "../features/auth/pages/client/login/Login";
 import SignUp from "../features/auth/pages/client/register/SignUp";
+import AccountSettings from "../features/auth/pages/client/settings/AccountSettings";
 
 const AppRoutes = () => {
   return (
@@ -21,6 +22,8 @@ const AppRoutes = () => {
       <Route path="/signUpClient" element={<SignUp />} />
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/accountSettings" element={<AccountSettings />} />
+
       <Route path="/availableCategories" element={<AvailableCategories />} />
       <Route path="/selectBusinessState" element={<SelectBusinessState />} />
       <Route path="/validateCodeBusiness" element={<ValidateCodeBusiness />} />

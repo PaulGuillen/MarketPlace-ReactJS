@@ -5,16 +5,17 @@ import { useNavigate } from "react-router-dom";
 import { validateEmail, validatePassword } from "../../../../../utils/Utils";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useDispatch } from "react-redux";
-import { setUser } from "../../../../../store/authSlice"; 
+import { setUser } from "../../../../../store/authSlice";
+
 export const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(""); 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLoginClick = async () => {
-    setError(""); 
+    setError("");
 
     if (!validateEmail(email)) {
       setError("Por favor, ingresa un correo válido.");
