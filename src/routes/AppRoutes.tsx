@@ -15,6 +15,7 @@ import SignUp from "../features/auth/pages/client/register/SignUp";
 const AppRoutes = () => {
   return (
     <Routes>
+      <Route path="/" element={<Home />} />
       <Route path="/home" element={<Home />} />
       <Route path="/clientLogin" element={<Login />} />
       <Route path="/signUpClient" element={<SignUp />} />
@@ -25,7 +26,7 @@ const AppRoutes = () => {
       <Route path="/validateCodeBusiness" element={<ValidateCodeBusiness />} />
       <Route path="/registerBusiness" element={<RegisterBusiness />} />
       <Route path="/company" element={<Company />} />
-      <Route path="/products-business" element={<Product/>} />
+      <Route path="/products-business" element={<Product />} />
       <Route path="/orders-business" element={<Order />} />
     </Routes>
   );

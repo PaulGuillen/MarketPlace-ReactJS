@@ -1,16 +1,38 @@
-import { Link } from "react-router-dom";
-import "../../../styles/NavbarHome.css"; 
+import { useNavigate } from "react-router-dom";
+import "../../../styles/NavbarHome.css";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../store/store"; 
+import { RootState } from "../../../store/store";
+import logoMarket from "../../../assets/logo_market.png";
+import favouriteIcon from "../../../assets/icon_favourite.png";
+import shoppingIcon from "../../../assets/icon_shopping.png";
 
 const NavBarHome = () => {
-  const { user, isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const navigate = useNavigate();
+
+  const { user, isAuthenticated } = useSelector(
+    (state: RootState) => state.auth
+  );
+
+  const handleLoginClick = () => {
+    navigate("/clientLogin");
+  };
 
   return (
     <header className="navbar">
       <div className="navbar-left">
-        <button className="menu-button">☰ Menú</button>
-        <button className="location-button">📍 Ingresa tu ubicación</button>
+        <img src={logoMarket} alt="Logo" className="navbar-logo" />
+        <span
+          onClick={() => console.log("Menú clickeado")}
+          className="menu-button"
+        >
+          ☰ Menú
+        </span>
+        <span
+          onClick={() => console.log("Ubicación clickeada")}
+          className="location-button"
+        >
+          📍 Ingresa tu ubicación
+        </span>
       </div>
       <div className="navbar-center">
         <input
@@ -23,9 +45,16 @@ const NavBarHome = () => {
         {isAuthenticated ? (
           <span className="user-greeting">Hola, {user.email}</span>
         ) : (
-          <Link to="/clientLogin" className="login-button">¡Hola! Inicia sesión</Link>
+          <span onClick={handleLoginClick} className="login-button">
+            ¡Hola! Inicia sesión
+          </span>
         )}
-        <button className="cart-button">🛒</button>
+        <span className="favourite-button icon">
+          <img src={favouriteIcon} alt="Favorite" />
+        </span>
+        <span className="shopping-button icon">
+          <img src={shoppingIcon} alt="Shopping" />
+        </span>
       </div>
     </header>
   );

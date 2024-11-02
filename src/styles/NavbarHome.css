@@ -2,65 +2,144 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #333;
-    color: white;
-    padding: 10px 50px;
-}
-
-.navbar-left,
-.navbar-center,
-.navbar-right {
-    display: flex;
-    align-items: center;
+    width: 100%;
+    background-color: #f8f8f8;
+    color: #333;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
 }
 
 .navbar-left {
-    flex-grow: 1;
+    display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 10px;
+    flex: 1;
+}
+
+.navbar-logo {
+    height: 40px;
+}
+
+.menu-button,
+.location-button {
+    background-color: transparent;
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.menu-button:hover,
+.location-button:hover {
+    color: #007e3a;
 }
 
 .navbar-center {
-    flex-grow: 1;
+    flex: 2;
     display: flex;
     justify-content: center;
-}
-
-.navbar-right {
-    flex-grow: 1;
     align-items: center;
-    justify-content: center;
-}
-
-button {
-    background-color: transparent;
-    border: none;
-    color: white;
-    font-size: 1rem;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    align-items: center;
-}
-
-button:hover {
-    background-color: transparent;
-    color: white;
-}
-
-button img {
-    margin-right: 5px;
 }
 
 .search-bar {
     width: 100%;
-    max-width: 400px;
-    padding: 5px;
-    border-radius: 4px;
+    padding: 8px 40px 8px 15px;
+    border-radius: 20px;
     border: 1px solid #ddd;
+    font-size: 16px;
+    color: #333;
+    background-color: #fff;
+    background-image: url('path_to_search_icon');
+    background-position: 10px center;
+    background-repeat: no-repeat;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 15px;
+    flex: 1;
+}
+
+.user-greeting {
+    font-size: 16px;
+    color: #333;
 }
 
 .login-button,
-.cart-button {
-    margin-left: 20px;
+.favourite-button,
+.shopping-button {
+    background-color: transparent;
+    border: none;
+    color: #333;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+}
+
+.icon img {
+    height: 24px;
+    width: 24px;
+}
+
+.icon:hover,
+.login-button:hover,
+.favourite-button:hover,
+.shopping-button:hover {
+    color: #007e3a;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 10px;
+    }
+
+    .navbar-center {
+        flex: 3;
+    }
+
+    .search-bar {
+        max-width: 100%;
+        padding: 8px 20px 8px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 10px;
+    }
+
+    .navbar-left,
+    .navbar-right {
+        justify-content: center;
+    }
+
+    .navbar-center {
+        order: 2;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .search-bar {
+        width: 100%;
+        max-width: none;
+    }
+
+    .navbar-logo {
+        height: 30px;
+    }
+
+    .menu-button,
+    .location-button,
+    .login-button {
+        font-size: 14px;
+    }
 }
