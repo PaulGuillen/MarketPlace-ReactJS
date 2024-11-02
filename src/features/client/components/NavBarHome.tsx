@@ -51,7 +51,7 @@ const NavBarHome = () => {
               ) : (
                 <>
                   <span onClick={handleLoginClick}>Inicia sesión</span>
-                  <span onClick={() => navigate("/register")}>Regístrate</span>
+                  <span onClick={() => navigate("/signUpClient")}>Regístrate</span>
                 </>
               )}
             </div>
