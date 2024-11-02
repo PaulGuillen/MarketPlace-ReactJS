@@ -12,11 +12,10 @@ import Home from "../features/client/pages/home/Home";
 import Login from "../features/auth/pages/client/login/Login";
 import SignUp from "../features/auth/pages/client/register/SignUp";
 
-
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/home" element={<Home />} />
       <Route path="/clientLogin" element={<Login />} />
       <Route path="/signUpClient" element={<SignUp />} />
       <Route path="/register" element={<Register />} />
