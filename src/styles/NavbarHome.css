@@ -212,3 +212,74 @@
 .shopping-button:hover {
     color: #007e3a;
 }
+
+
+/* Menú desplegable principal */
+.user-dropdown {
+    position: relative;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    padding: 8px 0;
+    display: flex;
+    flex-direction: column;
+    width: 180px;
+    z-index: 1000;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown-menu span {
+    padding: 10px 20px;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-menu span:hover {
+    background-color: #f0f4f7;
+    color: #007e3a;
+    border-left: 4px solid #007e3a;
+}
+
+/* Submenú alineado a la izquierda */
+.submenu {
+    position: absolute;
+    top: 0;
+    right: 100%; /* Cambiamos de `left` a `right` para que aparezca a la izquierda */
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    padding: 8px 0;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    z-index: 1000;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.submenu span {
+    padding: 10px 20px;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.submenu span:hover {
+    background-color: #f0f4f7;
+    color: #007e3a;
+    border-left: 4px solid #007e3a;
+}
+
+/* Añadir un borde sutil para el menú */
+.dropdown-menu, .submenu {
+    border: 1px solid #e0e0e0;
+}
