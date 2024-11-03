@@ -22,18 +22,25 @@
 }
 
 .menu-button,
-.location-button {
+.location-button,
+.login-button,
+.favourite-button,
+.shopping-button {
     background-color: transparent;
+    border: none;
     color: #333;
     font-size: 16px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    margin-right: 15px;
+    margin-left: 15px;
 }
 
 .menu-button:hover,
-.location-button:hover {
+.location-button:hover,
+.login-button:hover,
+.favourite-button:hover,
+.shopping-button:hover {
     color: #007e3a;
 }
 
@@ -70,31 +77,12 @@
     color: #333;
 }
 
-.login-button,
-.favourite-button,
-.shopping-button {
-    background-color: transparent;
-    border: none;
-    color: #333;
-    font-size: 1rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    margin-left: 15px;
-}
-
 .icon img {
     height: 24px;
     width: 24px;
 }
 
-.icon:hover,
-.login-button:hover,
-.favourite-button:hover,
-.shopping-button:hover {
-    color: #007e3a;
-}
-
+/* Media Queries */
 @media (max-width: 768px) {
     .navbar {
         padding: 10px;
@@ -144,127 +132,33 @@
     }
 }
 
+/* Dropdown and Submenu Styling */
 .user-dropdown {
     position: relative;
     cursor: pointer;
 }
 
-.dropdown-menu {
-    position: absolute;
-    top: 100%; 
-    right: 0;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    width: 150px;
-    z-index: 1000;
-}
-
-.dropdown-menu span {
-    padding: 8px 10px;
-    color: #333;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.dropdown-menu span:hover {
-    background-color: #f1f1f1;
-}
-
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    background-color: #f8f8f8;
-    color: #333;
-    padding: 10px 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-}
-
-.menu-button,
-.location-button,
-.login-button,
-.favourite-button,
-.shopping-button {
-    background-color: transparent;
-    border: none;
-    color: #333;
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    margin-left: 15px;
-}
-
-.icon img {
-    height: 24px;
-    width: 24px;
-}
-
-.icon:hover,
-.login-button:hover,
-.favourite-button:hover,
-.shopping-button:hover {
-    color: #007e3a;
-}
-
-
-/* Menú desplegable principal */
-.user-dropdown {
-    position: relative;
-    cursor: pointer;
-}
-
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: #ffffff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    border-radius: 8px;
-    padding: 8px 0;
-    display: flex;
-    flex-direction: column;
-    width: 180px;
-    z-index: 1000;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.dropdown-menu span {
-    padding: 10px 20px;
-    color: #333;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.dropdown-menu span:hover {
-    background-color: #f0f4f7;
-    color: #007e3a;
-    border-left: 4px solid #007e3a;
-}
-
-/* Submenú alineado a la izquierda */
+.dropdown-menu,
 .submenu {
     position: absolute;
-    top: 0;
-    right: 100%; /* Cambiamos de `left` a `right` para que aparezca a la izquierda */
+    top: 100%;
     background-color: #ffffff;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     border-radius: 8px;
     padding: 8px 0;
     display: flex;
     flex-direction: column;
-    width: 200px;
     z-index: 1000;
     transition: opacity 0.3s ease, transform 0.3s ease;
+    width: 180px;
+    border: 1px solid #e0e0e0;
 }
 
+.dropdown-menu {
+    right: 0;
+}
+
+.dropdown-menu span,
 .submenu span {
     padding: 10px 20px;
     color: #333;
@@ -273,13 +167,17 @@
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.dropdown-menu span:hover,
 .submenu span:hover {
     background-color: #f0f4f7;
     color: #007e3a;
     border-left: 4px solid #007e3a;
 }
 
-/* Añadir un borde sutil para el menú */
-.dropdown-menu, .submenu {
-    border: 1px solid #e0e0e0;
+/* Submenu specific styling */
+.submenu {
+    right: 100%;
+    /* Aligns submenu to the left of the parent */
+    top: 0;
+    width: 200px;
 }
