@@ -9,7 +9,7 @@ import Company from "../features/business/pages/management/company/Company";
 import Product from "../features/business/pages/management/product/Product";
 import Order from "../features/business/pages/management/order/Order";
 import Home from "../features/client/pages/home/Home";
-import Login from "../features/auth/pages/client/login/Login";
+import Login from "../features/auth/pages/login/Login";
 import SignUp from "../features/auth/pages/client/register/SignUp";
 import AccountSettings from "../features/auth/pages/client/settings/AccountSettings";
 import SignUpBusiness from "../features/auth/pages/business/register/SignUpBusiness";

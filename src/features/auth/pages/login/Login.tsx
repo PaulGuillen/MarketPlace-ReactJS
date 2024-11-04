@@ -1,34 +1,22 @@
-import { useEffect, useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { useState } from "react";
+import "../../../../styles/auth/client/Login.css";
 import { auth } from "../../../../config/firebaseConfig";
-import Button from "../../../../components/button/Button";
-import "./Login.css";
-import { validateEmail, validatePassword } from "../../../../utils/Utils";
 import { useNavigate } from "react-router-dom";
+import { validateEmail, validatePassword } from "../../../../utils/Utils";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../../../store/authSlice";
 
-const Login = () => {
+export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); // Definir el estado de error
+  const [error, setError] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const preventGoBack = () => {
-      window.history.pushState(null, "", window.location.href); // Reemplaza la página actual en el historial
-    };
-
-    window.history.pushState(null, "", window.location.href); // Evita el retroceso al cargar la página
-    window.addEventListener("popstate", preventGoBack); // Escucha el evento de retroceso
-
-    return () => {
-      window.removeEventListener("popstate", preventGoBack); // Limpia el evento cuando el componente se desmonte
-    };
-  }, []);
-
   const handleLoginClick = async () => {
-    setError(""); // Limpiamos los errores antes de la validación
+    setError("");
 
-    // Validación de correo y contraseña
     if (!validateEmail(email)) {
       setError("Por favor, ingresa un correo válido.");
       return;
@@ -45,8 +33,9 @@ const Login = () => {
         email,
         password
       );
-      console.log("Usuario logueado:", userCredential.user);
-      navigate("/availableCategories"); 
+      const user = userCredential.user;
+      dispatch(setUser({ email: user.email, uid: user.uid }));
+      navigate("/Home");
     } catch (error: any) {
       setError("Error en inicio de sesión: " + error.message);
       console.error("Error en inicio de sesión:", error.message);
@@ -54,43 +43,40 @@ const Login = () => {
   };
 
   return (
-    <div className="login-body">
-    <div className="login-container">
-      <h2>Login</h2>
-      <form>
-        <input
-          type="email"
-          name="email"
-          placeholder="Ingresa tu correo"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Ingresa tu contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        <Button type="button" text="Ingresar" onClick={handleLoginClick} />
-      </form>
-      <div className="links">
+    <div className="main-container">
+      <div className="login-container">
+        <h2>Iniciar sesión</h2>
+        <p>¡Bienvenido a Ripley.com!</p>
+        <form>
+          <label>
+            <input
+              type="text"
+              name="email"
+              placeholder="Ingresa tu correo"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </label>
+          <label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Ingresa tu contraseña"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </label>
+          <button type="button" onClick={handleLoginClick}>
+            Iniciar sesión
+          </button>
+          <button type="button">Iniciar sesión con Google</button>
+          <button type="button">Iniciar sesión con Apple</button>
+        </form>
         <p>
-          ¿Aún no tienes cuenta?{" "}
-          <span className="link" onClick={() => navigate("/register")}>
-            Regístrate
-          </span>
-        </p>
-        <p>
-          ¿Has olvidado tu contraseña?{" "}
-          <span className="link" onClick={() => navigate("/forgot-password")}>
-            Recuperar contraseña
-          </span>
+          ¿Eres nuevo? <a href="/signUpClient">Crear cuenta</a>
         </p>
       </div>
     </div>
-  </div>
   );
 };
 
