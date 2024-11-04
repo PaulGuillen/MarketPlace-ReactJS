@@ -39,7 +39,7 @@ const SignUp = () => {
           </div>
           <button type="submit">Crear cuenta</button>
         </form>
-        <p className="privacy-links"><a href="/clientLogin">Inicia sesión</a></p>
+        <p className="privacy-links"><a href="/login">Inicia sesión</a></p>
       </div>
     </div>
   );

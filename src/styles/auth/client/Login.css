@@ -8,7 +8,10 @@
 }
 
 .login-container {
-  width: 100%;        
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
   max-width: 500px;
   padding: 30px;
   background-color: #ffffff;
@@ -32,27 +35,23 @@
 }
 
 .login-container form {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-}
-
-.login-container label {
-  width: 100%;
-  font-size: 14px;
-  margin-bottom: 5px;
-  text-align: left;
+  gap: 15px;
 }
 
 .login-container input[type="text"],
 .login-container input[type="password"] {
   width: 100%;
+  padding: 12px;
   border-radius: 4px;
   border: 1px solid #ccc;
   font-size: 14px;
+  box-sizing: border-box;
 }
 
-.login-container button[type="submit"] {
+.login-container button[type="button"] {
   width: 100%;
   padding: 12px;
   background-color: #800080;
@@ -63,17 +62,14 @@
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin-top: 10px;
-  justify-content: center;
-  align-items: center; 
-  text-align: center;
 }
 
-.login-container button[type="submit"]:hover {
+.login-container button[type="button"]:hover {
   background-color: #670067;
 }
 
-.login-container button[type="button"] {
+/* Botones de inicio de sesión con Google y Apple */
+.login-container .social-login-button {
   width: 100%;
   padding: 12px;
   background-color: #ffffff;
@@ -82,13 +78,9 @@
   border-radius: 4px;
   font-size: 14px;
   cursor: pointer;
-  margin-bottom: 10px;
-  justify-content: center;
-  align-items: center; 
-  text-align: center;
 }
 
-.login-container button[type="button"]:hover {
+.login-container .social-login-button:hover {
   background-color: #f2f2f2;
 }
 

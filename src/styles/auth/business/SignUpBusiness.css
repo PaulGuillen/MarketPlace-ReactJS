@@ -1,0 +1,133 @@
+.main-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #727272;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.login-container {
+    display: flex;
+    width: 100%;
+    max-width: 900px;
+    height: 100%;
+    background-color: #f2f2f2;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.login-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e5e5e5;
+    width: 50%;
+}
+
+.login-graphics img {
+    width: 100%;
+    height: auto;
+    max-width: 200px;
+}
+
+.login-right {
+    width: 50%;
+    padding: 40px;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+.login-form {
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+}
+
+.login-form h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.login-form p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Campos de entrada */
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+/* Opciones del formulario */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Botones */
+.btn-login,
+.btn-google {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.btn-login {
+    background-color: #333;
+    color: white;
+}
+
+.btn-google {
+    background-color: #f2f2f2;
+    color: black;
+    border: 1px solid #ddd;
+}
+
+.btn-google svg {
+    margin-right: 8px;
+}
+
+.signup-prompt {
+    margin-top: 20px;
+    color: #666;
+}
+
+.signup-prompt a {
+    color: black;
+    text-decoration: underline;
+}

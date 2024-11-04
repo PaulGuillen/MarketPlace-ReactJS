@@ -18,6 +18,7 @@ const NavBarHome = () => {
   );
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [isSubmenuVisible, setSubmenuVisible] = useState(false);
+  const [isRegisterSubmenuVisible, setRegisterSubmenuVisible] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -61,6 +62,7 @@ const NavBarHome = () => {
           onMouseLeave={() => {
             setDropdownVisible(false);
             setSubmenuVisible(false);
+            setRegisterSubmenuVisible(false);
           }}
         >
           <span className="user-greeting">
@@ -75,24 +77,24 @@ const NavBarHome = () => {
                 </>
               ) : (
                 <>
+                  <span onClick={() => navigate("/login")}>Inicia sesión</span>
                   <span
-                    onMouseEnter={() => setSubmenuVisible(true)}
-                    onMouseLeave={() => setSubmenuVisible(false)}
+                    onMouseEnter={() => setRegisterSubmenuVisible(true)}
+                    onMouseLeave={() => setRegisterSubmenuVisible(false)}
                     className="has-submenu"
                   >
-                    Inicia sesión
-                    {isSubmenuVisible && (
+                    Regístrate
+                    {isRegisterSubmenuVisible && (
                       <div className="submenu">
-                        <span onClick={() => navigate("/clientLogin")}>
-                          Inicia sesión como Cliente
+                        <span onClick={() => navigate("/signUpClient")}>
+                          Regístrate como Cliente
                         </span>
-                        <span onClick={() => navigate("/businessLogin")}>
-                          Inicia sesión como Negocio
+                        <span onClick={() => navigate("/signUpBusiness")}>
+                          Regístrate como Negocio
                         </span>
                       </div>
                     )}
                   </span>
-                  <span onClick={() => navigate("/register")}>Regístrate</span>
                 </>
               )}
             </div>

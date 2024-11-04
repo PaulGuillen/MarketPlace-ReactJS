@@ -12,17 +12,21 @@ import Home from "../features/client/pages/home/Home";
 import Login from "../features/auth/pages/client/login/Login";
 import SignUp from "../features/auth/pages/client/register/SignUp";
 import AccountSettings from "../features/auth/pages/client/settings/AccountSettings";
+import SignUpBusiness from "../features/auth/pages/business/register/SignUpBusiness";
 
 const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/home" element={<Home />} />
-      <Route path="/clientLogin" element={<Login />} />
-      <Route path="/signUpClient" element={<SignUp />} />
+      <Route path="/login" element={<Login />} />
+
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/accountSettings" element={<AccountSettings />} />
+
+      <Route path="/signUpClient" element={<SignUp />} />
+      <Route path="/signUpBusiness" element={<SignUpBusiness />} />
 
       <Route path="/availableCategories" element={<AvailableCategories />} />
       <Route path="/selectBusinessState" element={<SelectBusinessState />} />
