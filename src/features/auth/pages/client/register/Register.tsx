@@ -1,6 +1,56 @@
+import { useState } from "react";
 import "../../../../../styles/auth/client/Register.css";
+import { useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth, db } from "../../../../../config/firebaseConfig";
+import { doc, setDoc } from "firebase/firestore";
 
 const Register = () => {
+
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleRegisterClick = async () => {
+    if (password !== confirmPassword) {
+      setError("Las contraseñas no coinciden");
+      return;
+    }
+
+    try {
+
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      const user = userCredential.user;
+      const uid = user.uid;
+
+
+      await updateProfile(user, {
+        displayName: fullName,
+      });
+
+      await setDoc(doc(db, "users", uid), {
+        uid: uid,
+        fullName: fullName,
+        email: email,
+        phone: phone,
+      });
+
+      alert("Registro exitoso");
+      navigate("/login"); 
+    } catch (error: any) {
+      setError("Error en el registro: " + error.message);
+    }
+  };
+  
   return (
     <div className="register-main-container">
       <div className="register-container">

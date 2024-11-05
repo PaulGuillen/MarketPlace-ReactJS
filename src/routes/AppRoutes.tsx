@@ -14,8 +14,6 @@ import AccountSettings from "../features/auth/pages/client/settings/AccountSetti
 import RegisterBusiness from "../features/auth/pages/business/register/RegisterBusiness";
 import Register from "../features/auth/pages/client/register/Register";
 
-
-
 const AppRoutes = () => {
   return (
     <Routes>
