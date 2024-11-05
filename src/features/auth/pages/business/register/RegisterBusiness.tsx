@@ -8,13 +8,14 @@ import {
   registerBusinessData,
   getUserData,
   getCurrentUser,
-} from "../../../services/Register";
+} from "../../../services/RegisterBusiness";
 
 const RegisterBusiness = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({
-    fullName: "",
-    dni: "",
+    name: "",
+    lastName: "",
+    document: "",
     phone: "",
     email: "",
     password: "",
@@ -41,14 +42,12 @@ const RegisterBusiness = () => {
 
     if (user) {
       try {
-        // Check if DNI is already registered
         const dniExists = await checkDniExists(form.dni);
         if (dniExists) {
           setErrorMessage("Este DNI ya está registrado.");
           return;
         }
 
-        // Retrieve user data from Firestore
         const userData = await getUserData(user.uid);
         if (userData) {
           const businessData = {
@@ -61,7 +60,6 @@ const RegisterBusiness = () => {
             representative: form.representative,
           };
 
-          // Register business data
           await registerBusinessData(user.uid, businessData);
           console.log("Negocio registrado con éxito:", businessData);
 
@@ -84,7 +82,7 @@ const RegisterBusiness = () => {
   };
 
   return (
-    <div className="main-container">
+    <div className="regiter-business-main-container">
       <div className="register-business-container">
         <div className="register-business-left">
           <div className="register-business-graphics">
@@ -97,23 +95,34 @@ const RegisterBusiness = () => {
             <p>Please fill in your business details</p>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <label>Nombre Completo</label>
+                <label>Nombre</label>
                 <input
                   type="text"
-                  name="fullName"
-                  placeholder="Nombre"
-                  value={form.fullName}
+                  name="name"
+                  placeholder="Nombres"
+                  value={form.name}
                   onChange={handleChange}
                   required
                 />
               </div>
               <div className="form-group">
-                <label>DNI</label>
+                <label>Apellido</label>
                 <input
                   type="text"
-                  name="dni"
-                  placeholder="DNI"
-                  value={form.dni}
+                  name="apellido"
+                  placeholder="Apellidos"
+                  value={form.lastName}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Documento de identidad</label>
+                <input
+                  type="text"
+                  name="document"
+                  placeholder="Apellidos"
+                  value={form.document}
                   onChange={handleChange}
                   required
                 />

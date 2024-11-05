@@ -12,7 +12,7 @@ export const validatePassword = (password: string | null | undefined): boolean =
 
 export const truncateText = (text, charLimit) => {
   if (text.length > charLimit) {
-    return text.slice(0, charLimit) + '...';  // Truncar al límite de caracteres
+    return text.slice(0, charLimit) + '...'; 
   }
   return text;
 };

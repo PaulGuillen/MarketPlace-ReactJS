@@ -1,36 +1,36 @@
-import { getAuth } from "firebase/auth";
-import {
-  doc,
-  getDoc,
-  setDoc,
-  collection,
-  query,
-  where,
-  getDocs,
-} from "firebase/firestore";
-import { db } from "../../../config/firebaseConfig";
+import { auth, db } from "../../../config/firebaseConfig";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
-export const checkDniExists = async (dni: string) => {
-  const businessRef = collection(db, "business");
-  const q = query(businessRef, where("dni", "==", dni));
-  const querySnapshot = await getDocs(q);
-  return !querySnapshot.empty;
-};
-
-export const registerBusinessData = async (
-  userUid: string,
-  businessData: Record<string, any>
+export const registerUser = async (
+    name: string,
+    lastname: string,
+    document: string,
+    email: string,
+    phone: string,
+    password: string
 ) => {
-  await setDoc(doc(db, "business", userUid), businessData);
-};
+    try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
 
-export const getUserData = async (userUid: string) => {
-  const userDocRef = doc(db, "users", userUid);
-  const userDocSnap = await getDoc(userDocRef);
-  return userDocSnap.exists() ? userDocSnap.data() : null;
-};
+        const fullName = `${name} ${lastname}`;
+        const isDNI = document.length === 8;
+        const documentType = isDNI ? "dni" : "cex";
+        
+        await updateProfile(user, { displayName: fullName });
+        await setDoc(doc(db, "users", user.uid), {
+            uid: user.uid,
+            name,
+            lastname,
+            documentType,
+            document,
+            email,
+            phone,
+        });
 
-export const getCurrentUser = () => {
-  const auth = getAuth();
-  return auth.currentUser;
+        return user;
+    } catch (error) {
+        throw new Error(error.message);
+    }
 };
