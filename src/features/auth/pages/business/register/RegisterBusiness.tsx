@@ -1,14 +1,14 @@
 import "../../../../../styles/auth/business/RegisterBusiness.css";
 import { FaGoogle } from "react-icons/fa";
 import tiendaOnline from "../../../../../assets/tienda-online.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  checkDniExists,
-  registerBusinessData,
-  getUserData,
-  getCurrentUser,
+  checkDocumentExist,
+  fetchExistingUserData,
+  saveBusinessData,
   prepareBusinessData,
+  getCurrentUser,
 } from "../../../services/RegisterBusiness";
 
 const RegisterBusiness = () => {
@@ -25,47 +25,77 @@ const RegisterBusiness = () => {
   });
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [isDocumentDisabled, setIsDocumentDisabled] = useState(false);
+
+  useEffect(() => {
+    setIsDocumentDisabled(false);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleDocumentBlur = async () => {
+    if (form.document.length >= 8) {
+      setErrorMessage("");
+      const userUid = await checkDocumentExist(form.document);
+
+      if (userUid) {
+        setErrorMessage("Documento encontrado. Cargando datos existentes...");
+        const existingData = await fetchExistingUserData(userUid);
+
+        if (existingData) {
+          setForm({
+            name: existingData.name || "",
+            lastName: existingData.lastName || "",
+            document: existingData.document || form.document,
+            phone: existingData.phone || "",
+            email: existingData.email || "",
+            password: "",
+            businessName: existingData.businessName || "",
+            representative: existingData.representative || "",
+          });
+          setIsUpdating(true);
+          setIsDocumentDisabled(true);
+          setErrorMessage("");
+        }
+      } else {
+        setIsUpdating(false);
+      }
+    }
+  };
+
+  const handleSubmit = async () => {
+    setErrorMessage("");
+
+    if (!form.document) {
+      setErrorMessage("Por favor, ingrese un documento válido.");
+      return;
+    }
 
     if (form.password !== confirmPassword) {
       setErrorMessage("Las contraseñas no coinciden.");
       return;
     }
 
-    setErrorMessage("");
     const user = getCurrentUser();
-
     if (user) {
       try {
-        const dniExists = await checkDniExists(form.document);
-        if (dniExists) {
-          setErrorMessage("Este DNI ya está registrado.");
-          return;
-        }
-
-        const userData = await getUserData(user.uid);
-        if (userData) {
-          const businessData = prepareBusinessData(user.uid, form);
-
-          await registerBusinessData(user.uid, businessData);
-          console.log("Negocio registrado con éxito:", businessData);
-
-          navigate("/company");
-        } else {
-          setErrorMessage("No se encontraron datos para este usuario en Firestore.");
-        }
+        const businessData = prepareBusinessData(user.uid, form);
+        await saveBusinessData(user.uid, businessData);
+        alert(
+          isUpdating ? "Datos actualizados exitosamente." : "Registro exitoso."
+        );
+        navigate("/company");
       } catch (error) {
-        console.error("Error al registrar el negocio:", error);
-        setErrorMessage("Ocurrió un error al registrar el negocio. Inténtalo de nuevo.");
+        console.error("Error al registrar/actualizar el negocio:", error);
+        setErrorMessage(
+          "Ocurrió un error al registrar el negocio. Inténtalo de nuevo."
+        );
       }
     } else {
-      console.log("No hay usuario autenticado.");
       setErrorMessage("No hay un usuario autenticado.");
     }
   };
@@ -80,9 +110,15 @@ const RegisterBusiness = () => {
         </div>
         <div className="register-business-right">
           <div className="register-business-form">
-            <h2>Create an Account</h2>
-            <p>Please fill in your business details</p>
-            <form onSubmit={handleSubmit}>
+            <h2>
+              {isUpdating ? "Update Business Information" : "Create an Account"}
+            </h2>
+            <p>
+              {isUpdating
+                ? "Update your business details"
+                : "Please fill in your business details"}
+            </p>
+            <div>
               <div className="form-group">
                 <label>Nombre</label>
                 <input
@@ -113,7 +149,9 @@ const RegisterBusiness = () => {
                   placeholder="Documento de identidad"
                   value={form.document}
                   onChange={handleChange}
+                  onBlur={handleDocumentBlur}
                   required
+                  disabled={isDocumentDisabled}
                 />
               </div>
               <div className="form-group">
@@ -146,7 +184,7 @@ const RegisterBusiness = () => {
                   placeholder="Crea tu contraseña"
                   value={form.password}
                   onChange={handleChange}
-                  required
+                  required={!isUpdating}
                 />
               </div>
               <div className="form-group">
@@ -156,7 +194,7 @@ const RegisterBusiness = () => {
                   placeholder="Confirmar contraseña"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  required
+                  required={!isUpdating}
                 />
               </div>
               <div className="form-group">
@@ -182,13 +220,17 @@ const RegisterBusiness = () => {
                 />
               </div>
               {errorMessage && <p className="error-message">{errorMessage}</p>}
-              <button type="submit" className="btn-register-business">
-                Register
+              <button
+                type="button"
+                className="btn-register-business"
+                onClick={handleSubmit}
+              >
+                {isUpdating ? "Update" : "Register"}
               </button>
               <button type="button" className="btn-google">
                 <FaGoogle /> Sign up with Google
               </button>
-            </form>
+            </div>
             <p className="signup-prompt">
               Already have an account? <a href="#login">Log In</a>
             </p>
