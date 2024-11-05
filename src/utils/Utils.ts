@@ -17,3 +17,6 @@ export const truncateText = (text, charLimit) => {
   return text;
 };
 
+export const getDocumentType = (document: string): string => {
+  return document.length === 8 ? "dni" : "cex";
+};

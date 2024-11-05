@@ -8,6 +8,7 @@ import {
   registerBusinessData,
   getUserData,
   getCurrentUser,
+  prepareBusinessData,
 } from "../../../services/RegisterBusiness";
 
 const RegisterBusiness = () => {
@@ -42,7 +43,7 @@ const RegisterBusiness = () => {
 
     if (user) {
       try {
-        const dniExists = await checkDniExists(form.dni);
+        const dniExists = await checkDniExists(form.document);
         if (dniExists) {
           setErrorMessage("Este DNI ya está registrado.");
           return;
@@ -50,30 +51,18 @@ const RegisterBusiness = () => {
 
         const userData = await getUserData(user.uid);
         if (userData) {
-          const businessData = {
-            uid: user.uid,
-            fullName: form.fullName,
-            email: form.email,
-            phone: form.phone,
-            dni: form.dni,
-            businessName: form.businessName,
-            representative: form.representative,
-          };
+          const businessData = prepareBusinessData(user.uid, form);
 
           await registerBusinessData(user.uid, businessData);
           console.log("Negocio registrado con éxito:", businessData);
 
           navigate("/company");
         } else {
-          setErrorMessage(
-            "No se encontraron datos para este usuario en Firestore."
-          );
+          setErrorMessage("No se encontraron datos para este usuario en Firestore.");
         }
       } catch (error) {
         console.error("Error al registrar el negocio:", error);
-        setErrorMessage(
-          "Ocurrió un error al registrar el negocio. Inténtalo de nuevo."
-        );
+        setErrorMessage("Ocurrió un error al registrar el negocio. Inténtalo de nuevo.");
       }
     } else {
       console.log("No hay usuario autenticado.");
@@ -82,7 +71,7 @@ const RegisterBusiness = () => {
   };
 
   return (
-    <div className="regiter-business-main-container">
+    <div className="register-business-main-container">
       <div className="register-business-container">
         <div className="register-business-left">
           <div className="register-business-graphics">
@@ -109,7 +98,7 @@ const RegisterBusiness = () => {
                 <label>Apellido</label>
                 <input
                   type="text"
-                  name="apellido"
+                  name="lastName"
                   placeholder="Apellidos"
                   value={form.lastName}
                   onChange={handleChange}
@@ -121,7 +110,7 @@ const RegisterBusiness = () => {
                 <input
                   type="text"
                   name="document"
-                  placeholder="Apellidos"
+                  placeholder="Documento de identidad"
                   value={form.document}
                   onChange={handleChange}
                   required

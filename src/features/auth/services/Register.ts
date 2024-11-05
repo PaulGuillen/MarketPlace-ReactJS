@@ -1,6 +1,7 @@
 import { auth, db } from "../../../config/firebaseConfig";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
+import { getDocumentType } from "../../../utils/Utils";
 
 export const registerUser = async (
     name: string,
@@ -13,20 +14,17 @@ export const registerUser = async (
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-
         const fullName = `${name} ${lastname}`;
-        const isDNI = document.length === 8;
-        const documentType = isDNI ? "dni" : "cex";
-        
+
         await updateProfile(user, { displayName: fullName });
         await setDoc(doc(db, "users", user.uid), {
             uid: user.uid,
-            name,
-            lastname,
-            documentType,
-            document,
-            email,
-            phone,
+            name: name,
+            lastName: lastname,
+            documentType: getDocumentType(document),
+            document: document,
+            email: email,
+            phone: phone,
         });
 
         return user;
