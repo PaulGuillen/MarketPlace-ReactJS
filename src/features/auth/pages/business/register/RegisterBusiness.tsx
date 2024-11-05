@@ -3,66 +3,66 @@ import { FaGoogle } from "react-icons/fa";
 import tiendaOnline from "../../../../../assets/tienda-online.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuth } from "firebase/auth";
 import {
-  doc,
-  getDoc,
-  setDoc,
-  collection,
-  query,
-  where,
-  getDocs,
-} from "firebase/firestore";
-import { db } from "../../../../../config/firebaseConfig";
+  checkDniExists,
+  registerBusinessData,
+  getUserData,
+  getCurrentUser,
+} from "../../../services/Register";
 
 const RegisterBusiness = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({
+    fullName: "",
     dni: "",
+    phone: "",
+    email: "",
+    password: "",
     businessName: "",
     representative: "",
   });
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleChange = (e: { target: { name: any; value: any } }) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (form.password !== confirmPassword) {
+      setErrorMessage("Las contraseñas no coinciden.");
+      return;
+    }
+
     setErrorMessage("");
-    const auth = getAuth();
-    const user = auth.currentUser;
+    const user = getCurrentUser();
 
     if (user) {
       try {
-        const businessRef = collection(db, "business");
-        const q = query(businessRef, where("dni", "==", form.dni));
-        const querySnapshot = await getDocs(q);
-
-        if (!querySnapshot.empty) {
+        // Check if DNI is already registered
+        const dniExists = await checkDniExists(form.dni);
+        if (dniExists) {
           setErrorMessage("Este DNI ya está registrado.");
           return;
         }
 
-        const userDocRef = doc(db, "users", user.uid);
-        const userDocSnap = await getDoc(userDocRef);
-
-        if (userDocSnap.exists()) {
-          const { phone } = userDocSnap.data();
-
+        // Retrieve user data from Firestore
+        const userData = await getUserData(user.uid);
+        if (userData) {
           const businessData = {
             uid: user.uid,
-            fullName: user.displayName,
-            email: user.email,
-            phone: phone,
+            fullName: form.fullName,
+            email: form.email,
+            phone: form.phone,
             dni: form.dni,
             businessName: form.businessName,
             representative: form.representative,
           };
 
-          await setDoc(doc(db, "business", user.uid), businessData);
+          // Register business data
+          await registerBusinessData(user.uid, businessData);
           console.log("Negocio registrado con éxito:", businessData);
 
           navigate("/company");
@@ -97,33 +97,87 @@ const RegisterBusiness = () => {
             <p>Please fill in your business details</p>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <label>DNI or CEX</label>
+                <label>Nombre Completo</label>
+                <input
+                  type="text"
+                  name="fullName"
+                  placeholder="Nombre"
+                  value={form.fullName}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>DNI</label>
                 <input
                   type="text"
                   name="dni"
-                  placeholder="DNI or CEX"
+                  placeholder="DNI"
                   value={form.dni}
                   onChange={handleChange}
                   required
                 />
               </div>
               <div className="form-group">
-                <label>Business Name</label>
+                <label>Teléfono</label>
+                <input
+                  type="text"
+                  name="phone"
+                  placeholder="Teléfono"
+                  value={form.phone}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Correo</label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Correo"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Crea tu contraseña</label>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Crea tu contraseña"
+                  value={form.password}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Confirmar contraseña</label>
+                <input
+                  type="password"
+                  placeholder="Confirmar contraseña"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Nombre de negocio</label>
                 <input
                   type="text"
                   name="businessName"
-                  placeholder="Business Name"
+                  placeholder="Nombre de negocio"
                   value={form.businessName}
                   onChange={handleChange}
                   required
                 />
               </div>
               <div className="form-group">
-                <label>Representative</label>
+                <label>Nombre del representante</label>
                 <input
                   type="text"
                   name="representative"
-                  placeholder="Representative Name"
+                  placeholder="Nombre del representante"
                   value={form.representative}
                   onChange={handleChange}
                   required
