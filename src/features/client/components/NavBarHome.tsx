@@ -86,10 +86,10 @@ const NavBarHome = () => {
                     Regístrate
                     {isRegisterSubmenuVisible && (
                       <div className="submenu">
-                        <span onClick={() => navigate("/signUpClient")}>
+                        <span onClick={() => navigate("/registerClient")}>
                           Regístrate como Cliente
                         </span>
-                        <span onClick={() => navigate("/signUpBusiness")}>
+                        <span onClick={() => navigate("/registerBusiness")}>
                           Regístrate como Negocio
                         </span>
                       </div>

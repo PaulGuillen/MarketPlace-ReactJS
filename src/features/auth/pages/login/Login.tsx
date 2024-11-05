@@ -43,7 +43,7 @@ export const Login = () => {
   };
 
   return (
-    <div className="main-container">
+    <div className="login-main-container">
       <div className="login-container">
         <h2>Iniciar sesión</h2>
         <p>¡Bienvenido a Ripley.com!</p>
@@ -73,7 +73,7 @@ export const Login = () => {
           <button type="button">Iniciar sesión con Apple</button>
         </form>
         <p>
-          ¿Eres nuevo? <a href="/signUpClient">Crear cuenta</a>
+          ¿Eres nuevo? <a href="/registerClient">Crear cuenta</a>
         </p>
       </div>
     </div>

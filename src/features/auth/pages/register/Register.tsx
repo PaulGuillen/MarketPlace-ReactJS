@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword, updatePhoneNumber, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import { auth, db } from "../../../../config/firebaseConfig"; // Asegúrate de importar tu configuración de Firebase
+import { auth, db } from "../../../../config/firebaseConfig";
 import "./Register.css";
-import Input from "../../../../components/input/Input";
 import Button from "../../../../components/button/Button";
 import BackButton from "../../../../components/back-button/BackButtons";
 

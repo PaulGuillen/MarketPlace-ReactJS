@@ -1,9 +1,9 @@
-import "../../../../../styles/auth/client/SignUp.css";
+import "../../../../../styles/auth/client/Register.css";
 
-const SignUp = () => {
+const Register = () => {
   return (
-    <div className="main-container">
-      <div className="signup-container">
+    <div className="register-main-container">
+      <div className="register-container">
         <h2>Crear cuenta</h2>
         <p>¿Eres nuevo en Ripley?</p>
         <form>
@@ -45,4 +45,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Register;

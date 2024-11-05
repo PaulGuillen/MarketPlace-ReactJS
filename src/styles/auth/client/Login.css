@@ -1,4 +1,4 @@
-.main-container {
+.login-main-container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8,9 +8,8 @@
 }
 
 .login-container {
-  display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
   max-width: 500px;
   padding: 30px;
@@ -68,7 +67,6 @@
   background-color: #670067;
 }
 
-/* Botones de inicio de sesión con Google y Apple */
 .login-container .social-login-button {
   width: 100%;
   padding: 12px;

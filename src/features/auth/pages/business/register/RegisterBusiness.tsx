@@ -1,19 +1,18 @@
-import React from "react";
-import "../../../../../styles/auth/business/SignUpBusiness.css";
+import "../../../../../styles/auth/business/RegisterBusiness.css";
 import { FaGoogle } from "react-icons/fa";
 import tiendaOnline from "../../../../../assets/tienda-online.png";
 
-const SignUpBusiness = () => {
+const RegisterBusiness = () => {
   return (
     <div className="main-container">
-      <div className="login-container">
-        <div className="login-left">
-          <div className="login-graphics">
-          <img src={tiendaOnline} alt="Tienda Online" />
+      <div className="register-business-container">
+        <div className="register-business-left">
+          <div className="register-business-graphics">
+            <img src={tiendaOnline} alt="Tienda Online" />
           </div>
         </div>
-        <div className="login-right">
-          <div className="login-form">
+        <div className="register-business-right">
+          <div className="register-business-form">
             <h2>Welcome back!</h2>
             <p>Please enter your details</p>
             <form>
@@ -31,7 +30,7 @@ const SignUpBusiness = () => {
                 </label>
                 <a href="#forgot-password">Forgot password?</a>
               </div>
-              <button type="submit" className="btn-login">
+              <button type="submit" className="btn-register-business">
                 Log In
               </button>
               <button className="btn-google">
@@ -48,4 +47,4 @@ const SignUpBusiness = () => {
   );
 };
 
-export default SignUpBusiness;
+export default RegisterBusiness;
