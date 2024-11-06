@@ -4,26 +4,21 @@ import tiendaOnline from "../../../../../assets/tienda-online.png";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {
+  authenticateUser,
   checkDocumentExist,
   fetchExistingUserData,
-  saveBusinessData,
-  prepareBusinessData,
+  registerOrUpdateBusiness,
 } from "../../../services/RegisterBusiness";
 import ProgressLoading from "../../../../../components/progress-loading/ProgressLoading";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  updatePassword,
-} from "firebase/auth";
 
 const RegisterBusiness = () => {
   const navigate = useNavigate();
-  const auth = getAuth();
   const authenticatedUserRef = useRef(null);
   const [form, setForm] = useState({
     name: "",
     lastName: "",
     document: "",
+    ruc: "",
     phone: "",
     email: "",
     currentPassword: "",
@@ -42,7 +37,7 @@ const RegisterBusiness = () => {
     setIsDocumentDisabled(false);
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
@@ -59,17 +54,12 @@ const RegisterBusiness = () => {
         const existingData = await fetchExistingUserData(userUid);
 
         if (existingData) {
-          setForm({
-            name: existingData.name || "",
-            lastName: existingData.lastName || "",
-            document: existingData.document || form.document,
-            phone: existingData.phone || "",
-            email: existingData.email || "",
+          setForm((prevForm) => ({
+            ...prevForm,
+            ...existingData,
             currentPassword: "",
             lastPassword: "",
-            businessName: existingData.businessName || "",
-            representative: existingData.representative || "",
-          });
+          }));
           setIsUpdating(true);
           setIsDocumentDisabled(true);
           setErrorMessage("");
@@ -82,23 +72,8 @@ const RegisterBusiness = () => {
     }
   };
 
-  const authenticateUser = async () => {
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        form.email,
-        form.lastPassword
-      );
-      authenticatedUserRef.current = userCredential.user;
-      return true;
-    } catch (error) {
-      console.error("Error al autenticar al usuario:", error);
-      setErrorMessage("No se pudo autenticar. Verifica tu contraseña actual.");
-      return false;
-    }
-  };
-
   const handleSubmit = async () => {
+    debugger;
     setErrorMessage("");
 
     if (!form.document) {
@@ -113,29 +88,29 @@ const RegisterBusiness = () => {
 
     setLoading(true);
     try {
-      const businessData = prepareBusinessData(userUid, form);
-      await saveBusinessData(userUid, businessData);
-
-      if (isUpdating && form.currentPassword) {
-        const isAuthenticated = await authenticateUser();
-        if (isAuthenticated && authenticatedUserRef.current) {
-          await updatePassword(
-            authenticatedUserRef.current,
-            form.currentPassword
-          );
-          alert("Contraseña actualizada exitosamente.");
+      let authUser = authenticatedUserRef.current;
+      if (isUpdating && form.lastPassword) {
+        authUser = await authenticateUser(form.email, form.lastPassword);
+        if (!authUser) {
+          alert("No se pudo autenticar. Verifica tu contraseña actual.");
+          return;
         }
       }
+
+      await registerOrUpdateBusiness(
+        userUid,
+        form,
+        isUpdating,
+        authUser,
+        form.currentPassword
+      );
 
       alert(
         isUpdating ? "Datos actualizados exitosamente." : "Registro exitoso."
       );
       navigate("/company");
     } catch (error) {
-      console.error("Error al registrar/actualizar el negocio:", error);
-      setErrorMessage(
-        "Ocurrió un error al registrar o actualizar el negocio. Inténtalo de nuevo."
-      );
+      setErrorMessage(error.message);
     } finally {
       setLoading(false);
     }
@@ -196,6 +171,17 @@ const RegisterBusiness = () => {
                 />
               </div>
               <div className="form-group">
+                <label>RUC</label>
+                <input
+                  type="text"
+                  name="ruc"
+                  placeholder="RUC"
+                  value={form.ruc}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
                 <label>Teléfono</label>
                 <input
                   type="text"
@@ -234,7 +220,7 @@ const RegisterBusiness = () => {
                 <label>Nueva Contraseña</label>
                 <input
                   type="password"
-                  name="currentPassword" // Cambiado a "currentPassword"
+                  name="currentPassword"
                   placeholder="Nueva contraseña"
                   value={form.currentPassword}
                   onChange={handleChange}
