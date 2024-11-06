@@ -1,6 +1,8 @@
 import { db } from "../../../config/firebaseConfig";
 import { doc, getDoc, setDoc, query, where, collection, getDocs } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import { ROLE_BUSINESS } from "../../../utils/Constants";
+import { getDocumentType } from "../../../utils/Utils";
 
 export const checkDocumentExist = async (document: string): Promise<string | null> => {
   const q = query(collection(db, "users"), where("document", "==", document));
@@ -8,7 +10,7 @@ export const checkDocumentExist = async (document: string): Promise<string | nul
 
   if (!querySnapshot.empty) {
     const userDoc = querySnapshot.docs[0];
-    return userDoc.id; 
+    return userDoc.id;
   }
   return null;
 };
@@ -20,6 +22,8 @@ export const fetchExistingUserData = async (userUid: string) => {
 
 export const prepareBusinessData = (userUid: string, formData: any) => ({
   uid: userUid,
+  role: ROLE_BUSINESS,
+  documentType: getDocumentType(formData.document),
   ...formData,
 });
 

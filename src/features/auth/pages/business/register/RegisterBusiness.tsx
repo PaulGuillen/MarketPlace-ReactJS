@@ -1,25 +1,33 @@
 import "../../../../../styles/auth/business/RegisterBusiness.css";
 import { FaGoogle } from "react-icons/fa";
 import tiendaOnline from "../../../../../assets/tienda-online.png";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   checkDocumentExist,
   fetchExistingUserData,
   saveBusinessData,
   prepareBusinessData,
-  getCurrentUser,
 } from "../../../services/RegisterBusiness";
+import ProgressLoading from "../../../../../components/progress-loading/ProgressLoading";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  updatePassword,
+} from "firebase/auth";
 
 const RegisterBusiness = () => {
   const navigate = useNavigate();
+  const auth = getAuth();
+  const authenticatedUserRef = useRef(null);
   const [form, setForm] = useState({
     name: "",
     lastName: "",
     document: "",
     phone: "",
     email: "",
-    password: "",
+    currentPassword: "",
+    lastPassword: "",
     businessName: "",
     representative: "",
   });
@@ -27,6 +35,8 @@ const RegisterBusiness = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
   const [isDocumentDisabled, setIsDocumentDisabled] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [userUid, setUserUid] = useState("");
 
   useEffect(() => {
     setIsDocumentDisabled(false);
@@ -40,7 +50,9 @@ const RegisterBusiness = () => {
   const handleDocumentBlur = async () => {
     if (form.document.length >= 8) {
       setErrorMessage("");
+      setLoading(true);
       const userUid = await checkDocumentExist(form.document);
+      setUserUid(userUid);
 
       if (userUid) {
         setErrorMessage("Documento encontrado. Cargando datos existentes...");
@@ -53,7 +65,8 @@ const RegisterBusiness = () => {
             document: existingData.document || form.document,
             phone: existingData.phone || "",
             email: existingData.email || "",
-            password: "",
+            currentPassword: "",
+            lastPassword: "",
             businessName: existingData.businessName || "",
             representative: existingData.representative || "",
           });
@@ -64,6 +77,24 @@ const RegisterBusiness = () => {
       } else {
         setIsUpdating(false);
       }
+
+      setLoading(false);
+    }
+  };
+
+  const authenticateUser = async () => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        form.email,
+        form.lastPassword
+      );
+      authenticatedUserRef.current = userCredential.user;
+      return true;
+    } catch (error) {
+      console.error("Error al autenticar al usuario:", error);
+      setErrorMessage("No se pudo autenticar. Verifica tu contraseña actual.");
+      return false;
     }
   };
 
@@ -75,28 +106,38 @@ const RegisterBusiness = () => {
       return;
     }
 
-    if (form.password !== confirmPassword) {
+    if (form.currentPassword !== confirmPassword) {
       setErrorMessage("Las contraseñas no coinciden.");
       return;
     }
 
-    const user = getCurrentUser();
-    if (user) {
-      try {
-        const businessData = prepareBusinessData(user.uid, form);
-        await saveBusinessData(user.uid, businessData);
-        alert(
-          isUpdating ? "Datos actualizados exitosamente." : "Registro exitoso."
-        );
-        navigate("/company");
-      } catch (error) {
-        console.error("Error al registrar/actualizar el negocio:", error);
-        setErrorMessage(
-          "Ocurrió un error al registrar el negocio. Inténtalo de nuevo."
-        );
+    setLoading(true);
+    try {
+      const businessData = prepareBusinessData(userUid, form);
+      await saveBusinessData(userUid, businessData);
+
+      if (isUpdating && form.currentPassword) {
+        const isAuthenticated = await authenticateUser();
+        if (isAuthenticated && authenticatedUserRef.current) {
+          await updatePassword(
+            authenticatedUserRef.current,
+            form.currentPassword
+          );
+          alert("Contraseña actualizada exitosamente.");
+        }
       }
-    } else {
-      setErrorMessage("No hay un usuario autenticado.");
+
+      alert(
+        isUpdating ? "Datos actualizados exitosamente." : "Registro exitoso."
+      );
+      navigate("/company");
+    } catch (error) {
+      console.error("Error al registrar/actualizar el negocio:", error);
+      setErrorMessage(
+        "Ocurrió un error al registrar o actualizar el negocio. Inténtalo de nuevo."
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -176,19 +217,32 @@ const RegisterBusiness = () => {
                   required
                 />
               </div>
+              {isUpdating && (
+                <div className="form-group">
+                  <label>Contraseña Anterior</label>
+                  <input
+                    type="password"
+                    name="lastPassword"
+                    placeholder="Contraseña anterior"
+                    value={form.lastPassword}
+                    onChange={handleChange}
+                    required={isUpdating}
+                  />
+                </div>
+              )}
               <div className="form-group">
-                <label>Crea tu contraseña</label>
+                <label>Nueva Contraseña</label>
                 <input
                   type="password"
-                  name="password"
-                  placeholder="Crea tu contraseña"
-                  value={form.password}
+                  name="currentPassword" // Cambiado a "currentPassword"
+                  placeholder="Nueva contraseña"
+                  value={form.currentPassword}
                   onChange={handleChange}
                   required={!isUpdating}
                 />
               </div>
               <div className="form-group">
-                <label>Confirmar contraseña</label>
+                <label>Confirmar Contraseña</label>
                 <input
                   type="password"
                   placeholder="Confirmar contraseña"
@@ -219,7 +273,9 @@ const RegisterBusiness = () => {
                   required
                 />
               </div>
+
               {errorMessage && <p className="error-message">{errorMessage}</p>}
+
               <button
                 type="button"
                 className="btn-register-business"
@@ -227,16 +283,20 @@ const RegisterBusiness = () => {
               >
                 {isUpdating ? "Update" : "Register"}
               </button>
+
               <button type="button" className="btn-google">
                 <FaGoogle /> Sign up with Google
               </button>
             </div>
+
             <p className="signup-prompt">
               Already have an account? <a href="#login">Log In</a>
             </p>
           </div>
         </div>
       </div>
+
+      {loading && <ProgressLoading />}
     </div>
   );
 };

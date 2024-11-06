@@ -2,6 +2,7 @@ import { auth, db } from "../../../config/firebaseConfig";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { getDocumentType } from "../../../utils/Utils";
+import { ROLE_CLIENT } from "../../../utils/Constants";
 
 export const registerUser = async (
     name: string,
@@ -25,6 +26,7 @@ export const registerUser = async (
             document: document,
             email: email,
             phone: phone,
+            role: ROLE_CLIENT,
         });
 
         return user;
