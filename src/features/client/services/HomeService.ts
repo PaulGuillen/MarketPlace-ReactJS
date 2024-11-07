@@ -6,7 +6,6 @@ import { CategoriesHome } from "../../model/CategoriesHome";
 import { Store } from "../../model/Store";
 import { Product } from "../../model/Product";
 
-
 export const fetchCarouselImages = async (): Promise<CarouselImage[]> => {
   try {
     const imagesCollection = collection(db, "carouselImages");
