@@ -2,19 +2,15 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store/store";
-import { clearUser } from "../../../store/authSlice";
-import { getAuth, signOut } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../../config/firebaseConfig"; 
 import logoMarket from "../../../assets/logo_market.png";
 import favouriteIcon from "../../../assets/icon_favourite.png";
 import shoppingIcon from "../../../assets/icon_shopping.png";
 import "../../../styles/NavbarHome.css";
+import { getUserRole, handleUserLogout } from "../services/HomeService";
 
 const NavBarHome = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const auth = getAuth();
   const { user, isAuthenticated } = useSelector(
     (state: RootState) => state.auth
   );
@@ -25,31 +21,18 @@ const NavBarHome = () => {
   useEffect(() => {
     const fetchUserRole = async () => {
       if (isAuthenticated && user.uid) {
-        try {
-          const userDocRef = doc(db, "users", user.uid);
-          const userDoc = await getDoc(userDocRef);
-          if (userDoc.exists()) {
-            const userData = userDoc.data();
-            setUserRole(userData.role);
-          }
-        } catch (error) {
-          console.error("Error fetching user role from Firestore:", error);
-        }
+        const role = await getUserRole(user.uid);
+        setUserRole(role);
       }
     };
 
     fetchUserRole();
   }, [isAuthenticated, user]);
 
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      dispatch(clearUser());
-    } catch (error) {
-      console.error("Error al cerrar sesión:", error);
-    }
+  const handleLogout = () => {
+    handleUserLogout(dispatch);
   };
-
+  
   return (
     <header className="navbar">
       <div className="navbar-left">

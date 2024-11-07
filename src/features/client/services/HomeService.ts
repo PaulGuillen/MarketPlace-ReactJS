@@ -1,10 +1,37 @@
 
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../../../config/firebaseConfig";
 import { CarouselImage } from "../../model/CarouselImage";
 import { CategoriesHome } from "../../model/CategoriesHome";
 import { Store } from "../../model/Store";
 import { Product } from "../../model/Product";
+import { getAuth, signOut } from "firebase/auth";
+import { clearUser } from "../../../store/authSlice";
+import { Dispatch } from "react";
+
+export const getUserRole = async (userId: string): Promise<string> => {
+  try {
+    const userDocRef = doc(db, "users", userId);
+    const userDoc = await getDoc(userDocRef);
+    if (userDoc.exists()) {
+      const userData = userDoc.data();
+      return userData.role || "";
+    }
+  } catch (error) {
+    console.error("Error fetching user role from Firestore:", error);
+  }
+  return "";
+};
+
+export const handleUserLogout = async (dispatch: Dispatch<any>): Promise<void> => {
+  const auth = getAuth();
+  try {
+    await signOut(auth);
+    dispatch(clearUser());
+  } catch (error) {
+    console.error("Error al cerrar sesión:", error);
+  }
+};
 
 export const fetchCarouselImages = async (): Promise<CarouselImage[]> => {
   try {
