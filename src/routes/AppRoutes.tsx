@@ -1,10 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import AvailableCategories from "../features/client/pages/all_categories/AvailableCategories";
-
 import ForgotPassword from "../features/auth/pages/forgot_password/ForgotPassword";
-import SelectBusinessState from "../features/business/pages/state/SelectBusinessState";
-
-import ValidateCodeBusiness from "../features/business/pages/validate_code/ValidateCodeBusiness";
 import Company from "../features/business/pages/management/company/Company";
 import Product from "../features/business/pages/management/product/Product";
 import Order from "../features/business/pages/management/order/Order";
@@ -26,10 +21,6 @@ const AppRoutes = () => {
 
       <Route path="/registerClient" element={<Register />} />
       <Route path="/registerBusiness" element={<RegisterBusiness />} />
-
-      <Route path="/availableCategories" element={<AvailableCategories />} />
-      <Route path="/selectBusinessState" element={<SelectBusinessState />} />
-      <Route path="/validateCodeBusiness" element={<ValidateCodeBusiness />} />
 
       <Route path="/company" element={<Company />} />
       <Route path="/products-business" element={<Product />} />

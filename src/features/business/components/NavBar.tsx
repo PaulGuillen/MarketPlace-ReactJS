@@ -1,6 +1,6 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import "../styles/Navbar.css"; 
+import "../../../styles/business/NavbarBusiness.css";
+import homeIcon from "../../../assets/icon_home.png"; 
 
 const Navbar = () => {
   return (
@@ -16,6 +16,11 @@ const Navbar = () => {
           <Link to="/orders-business">Pedidos</Link>
         </li>
       </ul>
+      <div className="navbar-home-icon">
+        <Link to="/home">
+          <img src={homeIcon} alt="Home" className="home-icon" />
+        </Link>
+      </div>
     </nav>
   );
 };

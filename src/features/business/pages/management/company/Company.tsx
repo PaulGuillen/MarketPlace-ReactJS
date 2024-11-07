@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./Company.css";
-import Navbar from "../../../../../layouts/NavBar";
+import Navbar from "../../../components/NavBar";
 
 const Company = () => {
   const [logoImage, setLogoImage] = useState(null);

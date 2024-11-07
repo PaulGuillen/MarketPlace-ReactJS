@@ -1,6 +1,5 @@
-import Navbar from "../../../../../layouts/NavBar";
+import Navbar from "../../../components/NavBar";
 import "./Product.css";
-
 
 const Product = () => {
     return (
@@ -9,7 +8,6 @@ const Product = () => {
         <div className="product-container">
   
           <div className="product-form">
-            {/* Card para las Categorías */}
             <div className="categories card">
               <h3>Categoría</h3>
               <input className="search-bar" type="text" placeholder="Buscar categoría" />

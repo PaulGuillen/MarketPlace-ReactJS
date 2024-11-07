@@ -1,4 +1,4 @@
-import Navbar from "../../../../../layouts/NavBar";
+import Navbar from "../../../components/NavBar";
 
 const Order = () => {
   return (
