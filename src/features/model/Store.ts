@@ -1,4 +1,9 @@
 export interface Store {
-  title: string;
-  imageUrl: string;
+  businessName: string;
+  email: string;
+  logoImage: string;
+  phone: string;
+  ruc: string;
+  storeUid: string;
+  userUid: string;
 }

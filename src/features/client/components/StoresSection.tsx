@@ -29,10 +29,10 @@ const StoresSection = () => {
           <div className="store-card" key={index}>
             <div
               className="store-image"
-              style={{ backgroundImage: `url(${store.imageUrl})` }}
+              style={{ backgroundImage: `url(${store.logoImage})` }}
             ></div>
             <Divider height="2px" />
-            <h3 className="store-title">{store.title}</h3>
+            <h3 className="store-title">{store.businessName}</h3>
           </div>
         ))}
       </div>

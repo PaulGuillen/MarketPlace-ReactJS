@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./Company.css";
 import Navbar from "../../../components/NavBar";
-import { fetchUserData, saveStoreData } from "../../../services/Company";
+import {
+  fetchStoreData,
+  fetchUserData,
+  saveStoreData,
+} from "../../../services/Company";
 import { observeAuthState } from "../../../../../utils/Utils";
 
 const Company = () => {
@@ -45,12 +49,17 @@ const Company = () => {
           email: data.email || "",
           password: data.lastPassword || "",
         });
+
+        const storeData = await fetchStoreData();
+        if (storeData && storeData.length > 0) {
+          setLogoImage(storeData[0].logoImage);
+        }
       }
     } catch (error) {
       console.error("Error initializing form data:", error);
     }
   };
-  
+
   const handleSave = async () => {
     try {
       const dataToSave = { ...formData, logoImage };
