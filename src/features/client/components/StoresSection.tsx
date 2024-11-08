@@ -27,10 +27,9 @@ const StoresSection = () => {
       <div className="store-list">
         {stores.map((store, index) => (
           <div className="store-card" key={index}>
-            <div
-              className="store-image"
-              style={{ backgroundImage: `url(${store.logoImage})` }}
-            ></div>
+            <div className="store-image-container">
+              <img src={store.logoImage} alt={store.businessName} className="store-image" />
+            </div>
             <Divider height="2px" />
             <h3 className="store-title">{store.businessName}</h3>
           </div>

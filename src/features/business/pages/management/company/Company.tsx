@@ -107,7 +107,7 @@ const Company = () => {
               onChange={handleImageUpload}
             />
             <label htmlFor="logo-upload-input" className="upload-icon">
-              📤 Tamaño del logo
+              📤 Recomendado: 626 x 626 px
             </label>
           </div>
         </div>
