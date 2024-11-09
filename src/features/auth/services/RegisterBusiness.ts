@@ -64,7 +64,7 @@ export const registerOrUpdateBusiness = async (
     userUid = userCredential.user.uid;
   }
 
-  const newBusinessUidRef = await addDoc(collection(db, "temporaryCollection"), {}); // Crea un UID sin guardar datos
+  const newBusinessUidRef = await addDoc(collection(db, "temporaryCollection"), {});
   const businessUid = newBusinessUidRef.id;
 
   const businessData = prepareBusinessData(userUid as string, formData, businessUid);
