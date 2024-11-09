@@ -13,9 +13,9 @@ const Product = () => {
           <CategorySection />
           <ProductDetailsSpecification />
         </div>
-
-        <button className="save-button">Guardar cambios</button>
-
+        <div className="btn-save-product">
+          <button className="save-button">Guardar cambios</button>
+        </div>
         <ProductManagement />
       </div>
     </div>

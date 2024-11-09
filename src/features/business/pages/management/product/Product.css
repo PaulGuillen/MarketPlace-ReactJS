@@ -17,6 +17,12 @@
     gap: 20px;
 }
 
+.btn-save-product {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
 .save-button {
     margin-top: 20px;
     padding: 10px 20px;
