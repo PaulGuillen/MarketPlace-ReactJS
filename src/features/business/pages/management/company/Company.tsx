@@ -7,6 +7,7 @@ import {
   saveStoreData,
 } from "../../../services/Company";
 import { observeAuthState } from "../../../../../utils/Utils";
+import ProgressLoading from "../../../../../components/progress-loading/ProgressLoading";
 
 const Company = () => {
   const [logoImage, setLogoImage] = useState<string | null>(null);
@@ -17,6 +18,7 @@ const Company = () => {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -39,6 +41,7 @@ const Company = () => {
   };
 
   const initializeFormData = async () => {
+    setLoading(true);
     try {
       const data = await fetchUserData();
       if (data) {
@@ -57,10 +60,13 @@ const Company = () => {
       }
     } catch (error) {
       console.error("Error initializing form data:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleSave = async () => {
+    setLoading(true);
     try {
       const dataToSave = { ...formData, logoImage };
       const isSuccess = await saveStoreData(dataToSave);
@@ -71,6 +77,8 @@ const Company = () => {
       }
     } catch (error) {
       console.error("Error saving data:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -90,6 +98,7 @@ const Company = () => {
     <div>
       <Navbar />
       <div className="company-body">
+        {loading && <ProgressLoading />}
         <div className="card logo-section">
           <div className="logo-upload">
             {logoImage ? (
@@ -111,7 +120,6 @@ const Company = () => {
             </label>
           </div>
         </div>
-
         <div className="card information-section">
           <div className="info-block">
             <h3>Para cliente</h3>
@@ -156,10 +164,13 @@ const Company = () => {
             />
           </div>
         </div>
-
         <div className="container-button">
-          <button className="save-button" onClick={handleSave}>
-            Guardar cambios
+          <button
+            className="save-button"
+            onClick={handleSave}
+            disabled={loading}
+          >
+            {loading ? "Guardando..." : "Guardar cambios"}
           </button>
         </div>
       </div>
