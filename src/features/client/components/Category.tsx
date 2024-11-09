@@ -1,20 +1,19 @@
 import { useEffect, useState } from "react";
 import { fetchCategories } from "../../../features/client/services/HomeService";
-import { CategoriesHome } from "features/model/CategoriesHome";
+import { Categories } from "features/model/Categories";
 import "../../../styles/Category.css";
 
 interface CategoryProps {
-  onCategorySelect: (category: CategoriesHome) => void;
+  onCategorySelect: (category: Categories) => void;
 }
 
 const Category = ({ onCategorySelect }: CategoryProps) => {
-  const [categories, setCategories] = useState<CategoriesHome[]>([]);
+  const [categories, setCategories] = useState<Categories[]>([]);
 
   useEffect(() => {
     const loadCategories = async () => {
       const fetchedCategories = await fetchCategories();
       setCategories(fetchedCategories);
-      console.log(fetchedCategories);
     };
 
     loadCategories();

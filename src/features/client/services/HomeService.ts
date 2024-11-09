@@ -2,7 +2,7 @@
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../../../config/firebaseConfig";
 import { CarouselImage } from "../../model/CarouselImage";
-import { CategoriesHome } from "../../model/CategoriesHome";
+import { Categories } from "../../model/Categories";
 import { Store } from "../../model/Store";
 import { Product } from "../../model/Product";
 import { getAuth, signOut } from "firebase/auth";
@@ -47,11 +47,11 @@ export const fetchCarouselImages = async (): Promise<CarouselImage[]> => {
   }
 };
 
-export const fetchCategories = async (): Promise<CategoriesHome[]> => {
+export const fetchCategories = async (): Promise<Categories[]> => {
   try {
     const categoriesCollection = collection(db, "categoriesHome");
     const categoriesSnapshot = await getDocs(categoriesCollection);
-    const categoriesList = categoriesSnapshot.docs.map((doc) => doc.data() as CategoriesHome);
+    const categoriesList = categoriesSnapshot.docs.map((doc) => doc.data() as Categories);
     return categoriesList;
   } catch (error) {
     console.error("Error fetching categories: ", error);

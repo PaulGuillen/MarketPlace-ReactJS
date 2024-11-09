@@ -3,11 +3,15 @@ import "../../../styles/business/CategorySection.css";
 import { RootState } from "../../../store/store";
 
 const CategorySection = () => {
+
   const { user, isAuthenticated } = useSelector(
     (state: RootState) => state.auth
   );
 
-  console.log(user, isAuthenticated);
+  const { userUid, businessUid } = useSelector(
+    (state: RootState) => state.business
+  );
+
 
   return (
     <div className="categories card">

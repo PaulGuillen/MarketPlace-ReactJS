@@ -3,7 +3,7 @@ import NavBarHome from "../../components/NavBarHome";
 import IconSection from "../../components/IconSection";
 import Category from "../../components/Category";
 import BannerSection from "../../components/BannerSection";
-import { CategoriesHome } from "../../../../features/model/CategoriesHome";
+import { Categories } from "../../../model/Categories";
 import StoresSection from "../../components/StoresSection";
 import BestSellersSection from "../../components/BestSellersSection";
 import ViralSection from "../../components/ViralSection";
@@ -11,7 +11,7 @@ import FooterSection from "../../components/FooterSection";
 
 const Home = () => {
   
-  const handleCategorySelect = (selectedCategory: CategoriesHome) => {
+  const handleCategorySelect = (selectedCategory: Categories) => {
     console.log("Selected Category:", selectedCategory);
   };
 

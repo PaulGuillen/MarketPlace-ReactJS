@@ -11,4 +11,9 @@ export interface Product {
     priceWithDiscount: string;
     bestSelling: boolean;
     isViral: boolean;
+    createdAt: string;
+    updatedAt: string;
+    businessUid: string;
+    userUid: string;
+    productUid: string;
 }
