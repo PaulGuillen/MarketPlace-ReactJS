@@ -1,6 +1,6 @@
 import { Store } from "../../../features/model/Store";
 import { auth, db } from "../../../config/firebaseConfig";
-import { getDoc, doc, setDoc, collection, query, where, getDocs, updateDoc } from "firebase/firestore";
+import { getDoc, doc, collection, query, where, getDocs, updateDoc, addDoc, setDoc } from "firebase/firestore";
 import { UserBusiness } from "../../../features/model/UserBusiness";
 
 export const fetchUserData = async (): Promise<UserBusiness | null> => {
@@ -46,21 +46,28 @@ export const saveStoreData = async (formData: any) => {
     try {
         const user = auth.currentUser;
         if (user) {
-            const storeDocRef = doc(db, "stores", user.uid);
+            const userDocRef = doc(db, "users", user.uid);
+            const userDoc = await getDoc(userDocRef);
 
-            const storeDoc = await getDoc(storeDocRef);
-            if (storeDoc.exists()) {
+            if (userDoc.exists()) {
+                const businessUid = userDoc.data().businessUid;
 
-                await updateDoc(storeDocRef, {
-                    ...formData,
-                });
+                if (businessUid) {
+                    const storeDocRef = doc(db, "stores", businessUid);
+                    await setDoc(storeDocRef, {
+                        ...formData,
+                        userUid: user.uid,
+                        businessUid: businessUid,
+                    });
+
+                    console.log("Store data saved with businessUid:", businessUid);
+                    return true;
+                } else {
+                    throw new Error("El documento de usuario no tiene un businessUid registrado.");
+                }
             } else {
-                await setDoc(storeDocRef, {
-                    ...formData,
-                    userUid: user.uid,
-                });
+                throw new Error("No se encontró un documento de usuario para el UID actual.");
             }
-            return true;
         }
         return false;
     } catch (error) {

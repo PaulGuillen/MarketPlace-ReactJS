@@ -12,7 +12,6 @@ export const validatePassword = (password: string | null | undefined): boolean =
   return password ? password.trim().length > 0 : false;
 };
 
-
 export const truncateText = (text, charLimit) => {
   if (text.length > charLimit) {
     return text.slice(0, charLimit) + '...'; 

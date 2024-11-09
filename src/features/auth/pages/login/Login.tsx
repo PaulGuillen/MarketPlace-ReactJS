@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { validateEmail, validatePassword } from "../../../../utils/Utils";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useDispatch } from "react-redux";
-import { setUser } from "../../../../store/authSlice";
+import { validateInformationToSave } from "../../services/Login";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -34,7 +34,7 @@ export const Login = () => {
         password
       );
       const user = userCredential.user;
-      dispatch(setUser({ email: user.email, uid: user.uid }));
+      validateInformationToSave(dispatch, user.uid);
       navigate("/Home");
     } catch (error: any) {
       setError("Error en inicio de sesión: " + error.message);

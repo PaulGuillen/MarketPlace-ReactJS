@@ -7,6 +7,7 @@ import {
   where,
   collection,
   getDocs,
+  addDoc,
 } from "firebase/firestore";
 import {
   getAuth,
@@ -36,20 +37,6 @@ export const fetchExistingUserData = async (userUid: string) => {
   return userDoc.exists() ? userDoc.data() : null;
 };
 
-export const prepareBusinessData = (userUid: string, formData: any) => ({
-  uid: userUid,
-  role: ROLE_BUSINESS,
-  documentType: getDocumentType(formData.document),
-  ...formData,
-});
-
-export const saveBusinessData = async (
-  userUid: string,
-  businessData: Record<string, any>
-) => {
-  await setDoc(doc(db, "users", userUid), businessData);
-};
-
 export const authenticateUser = async (
   email: string,
   password: string
@@ -59,18 +46,7 @@ export const authenticateUser = async (
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     return userCredential.user;
   } catch (error) {
-    console.error("Error al autenticar al usuario:", error);
     throw new Error("No se pudo autenticar. Verifica tu contraseña actual.");
-  }
-};
-
-export const updateUserPassword = async (user: User, newPassword: string) => {
-  try {
-    await updatePassword(user, newPassword);
-    console.log("Contraseña actualizada exitosamente.");
-  } catch (error) {
-    console.error("Error al actualizar la contraseña:", error);
-    throw new Error("No se pudo actualizar la contraseña.");
   }
 };
 
@@ -86,13 +62,39 @@ export const registerOrUpdateBusiness = async (
   if (!isUpdating) {
     const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.currentPassword);
     userUid = userCredential.user.uid;
-    console.log("Usuario nuevo creado con UID:", userUid);
   }
 
-  const businessData = prepareBusinessData(userUid as string, formData);
+  const newBusinessUidRef = await addDoc(collection(db, "temporaryCollection"), {}); // Crea un UID sin guardar datos
+  const businessUid = newBusinessUidRef.id;
+
+  const businessData = prepareBusinessData(userUid as string, formData, businessUid);
   await saveBusinessData(userUid as string, businessData);
 
   if (isUpdating && newPassword && authUser) {
     await updateUserPassword(authUser, newPassword);
+  }
+};
+
+export const prepareBusinessData = (userUid: string, formData: any, businessUid: string) => ({
+  uid: userUid,
+  businessUid: businessUid,
+  role: ROLE_BUSINESS,
+  documentType: getDocumentType(formData.document),
+  ...formData,
+});
+
+export const saveBusinessData = async (
+  userUid: string,
+  businessData: Record<string, any>
+) => {
+  await setDoc(doc(db, "users", userUid), businessData);
+};
+
+
+export const updateUserPassword = async (user: User, newPassword: string) => {
+  try {
+    await updatePassword(user, newPassword);
+  } catch (error) {
+    throw new Error("No se pudo actualizar la contraseña.");
   }
 };

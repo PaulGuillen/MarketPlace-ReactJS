@@ -1,5 +1,6 @@
 export interface UserBusiness {
     businessName: string;
+    businessUid: string;
     currentPassword: string;
     document: string;
     documentType: string;

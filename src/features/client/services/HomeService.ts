@@ -8,6 +8,7 @@ import { Product } from "../../model/Product";
 import { getAuth, signOut } from "firebase/auth";
 import { clearUser } from "../../../store/authSlice";
 import { Dispatch } from "react";
+import { clearUids } from "../../../store/businessSlice";
 
 export const getUserRole = async (userId: string): Promise<string> => {
   try {
@@ -28,6 +29,7 @@ export const handleUserLogout = async (dispatch: Dispatch<any>): Promise<void> =
   try {
     await signOut(auth);
     dispatch(clearUser());
+    dispatch(clearUids());
   } catch (error) {
     console.error("Error al cerrar sesión:", error);
   }
