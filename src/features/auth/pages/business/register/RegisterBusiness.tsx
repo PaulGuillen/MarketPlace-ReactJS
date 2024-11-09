@@ -73,7 +73,6 @@ const RegisterBusiness = () => {
   };
 
   const handleSubmit = async () => {
-    debugger;
     setErrorMessage("");
 
     if (!form.document) {
