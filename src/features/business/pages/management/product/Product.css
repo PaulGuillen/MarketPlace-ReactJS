@@ -1,79 +1,11 @@
 .card {
     background-color: white;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
     padding: 20px;
     margin-bottom: 20px;
+    box-sizing: inherit;
 }
-
-.search-bar {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-/* Estilos de las categorías */
-.categories {
-    width: 25%;
-}
-
-.categories h3 {
-    margin-bottom: 10px;
-}
-
-.categories ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.categories li {
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-}
-
-.categories li input[type="checkbox"] {
-    margin-right: 10px;
-    width: 20px;
-    height: 20px;
-    vertical-align: middle;
-}
-
-.add-category {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
-}
-
-.product-images {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.image-card {
-    width: 120px;
-    height: 120px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 16px;
-    color: #333;
-}
-
 
 .product-container {
     padding: 20px;
@@ -85,69 +17,6 @@
     gap: 20px;
 }
 
-.product-details-specifications {
-    display: flex;
-    gap: 20px;
-    width: 100%;
-}
-
-.product-details {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-    flex-grow: 1;
-}
-
-.product-details input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-}
-
-.divider {
-    width: 1px;
-    background-color: #ccc;
-    margin-left: 20px;
-    margin-right: 20px;
-}
-
-/* Estilos para las especificaciones */
-.specifications {
-    display: flex;
-    flex-direction: column;
-}
-
-.specification-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.specification-item {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    /* Dos columnas para los campos de especificación */
-    gap: 10px;
-}
-
-.specification-item input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.add-specification {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-    margin-top: 20px;
-}
-
-/* Estilos de las tarjetas de productos */
 .save-button {
     margin-top: 20px;
     padding: 10px 20px;
@@ -191,4 +60,15 @@
     color: #007bff;
     cursor: pointer;
     text-decoration: underline;
+}
+
+.search-bar {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    box-shadow: inherit;
 }
