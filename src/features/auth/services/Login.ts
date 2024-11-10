@@ -11,7 +11,6 @@ export const validateInformationToSave = async (dispatch: Dispatch<any>, userUid
 
     if (data.role === "business") {
         dispatch(setInformationBusiness({ userUid: data.uid, businessUid: data.businessUid }));
-        console.log("Data:", data);
     }
 
     dispatch(setUser({ email: data.email, uid: data.uid }));

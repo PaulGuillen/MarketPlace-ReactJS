@@ -66,7 +66,6 @@ export const registerOrUpdateBusiness = async (
 
   const newBusinessUidRef = await addDoc(collection(db, "temporaryCollection"), {});
   const businessUid = newBusinessUidRef.id;
-
   const businessData = prepareBusinessData(userUid as string, formData, businessUid);
   await saveBusinessData(userUid as string, businessData);
 
@@ -75,13 +74,16 @@ export const registerOrUpdateBusiness = async (
   }
 };
 
-export const prepareBusinessData = (userUid: string, formData: any, businessUid: string) => ({
-  uid: userUid,
-  businessUid: businessUid,
-  role: ROLE_BUSINESS,
-  documentType: getDocumentType(formData.document),
-  ...formData,
-});
+export const prepareBusinessData = (userUid: string, formData: any, businessUid: string) => {
+  return {
+    uid: userUid,
+    businessUid: businessUid,
+    documentType: getDocumentType(formData.document),
+    ...formData,
+    role: ROLE_BUSINESS,
+  };
+};
+
 
 export const saveBusinessData = async (
   userUid: string,

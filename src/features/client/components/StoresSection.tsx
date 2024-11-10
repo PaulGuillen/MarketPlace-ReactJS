@@ -11,7 +11,7 @@ const StoresSection = () => {
     const loadStores = async () => {
       const fetchedStores = await fetchStores();
       setStores(fetchedStores);
-      console.log(fetchedStores);
+
     };
 
     loadStores();
