@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { RootState } from "../../../store/store";
 import "../../../styles/business/CategorySection.css";
-import { collection, addDoc, doc, updateDoc } from "firebase/firestore";
+import { collection, addDoc, doc, updateDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../../config/firebaseConfig";
 import ProgressLoading from "../../../components/progress-loading/ProgressLoading";
 
@@ -18,6 +18,31 @@ const CategorySection = () => {
   const [newCategoryType, setNewCategoryType] = useState("");
   const [showDialog, setShowDialog] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      setLoading(true);
+      try {
+        const q = query(
+          collection(db, "categoriesProduct"),
+          where("userUid", "==", userUid)
+        );
+        const querySnapshot = await getDocs(q);
+        const categoriesData = querySnapshot.docs.map((doc) => ({
+          categoryUid: doc.id,
+          ...doc.data(),
+        })) as { categoryUid: string; name: string; type: string }[];
+        
+        setCategories(categoriesData);
+      } catch (error) {
+        console.error("Error al cargar las categorías: ", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, [userUid]);
 
   const handleAddCategory = async () => {
     if (newCategoryName.trim() === "" || newCategoryType.trim() === "") return;
@@ -60,11 +85,6 @@ const CategorySection = () => {
         type="text"
         placeholder="Buscar categoría"
       />
-      <div className="btn-add-category">
-        <button className="add-category" onClick={() => setShowDialog(true)}>
-          Agregar
-        </button>
-      </div>
 
       {showDialog && (
         <div className="dialog-overlay">
@@ -101,6 +121,12 @@ const CategorySection = () => {
           ))}
         </ul>
       )}
+
+      <div className="btn-add-category">
+        <button className="add-category" onClick={() => setShowDialog(true)}>
+          Agregar
+        </button>
+      </div>
     </div>
   );
 };
