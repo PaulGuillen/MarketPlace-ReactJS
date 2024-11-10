@@ -44,6 +44,7 @@ const Company = () => {
     setLoading(true);
     try {
       const data = await fetchUserData();
+      console.log("Data:", data);
       if (data) {
         setFormData({
           businessName: data.businessName || "",

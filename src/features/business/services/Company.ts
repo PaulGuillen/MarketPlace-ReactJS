@@ -59,6 +59,12 @@ export const saveStoreData = async (formData: any) => {
                         userUid: user.uid,
                         businessUid: businessUid,
                     });
+
+                    await setDoc(userDocRef, {
+                        ...userDoc.data(), 
+                        ...formData, 
+                    }, { merge: true });
+
                     return true;
                 } else {
                     throw new Error("El documento de usuario no tiene un businessUid registrado.");
@@ -73,3 +79,4 @@ export const saveStoreData = async (formData: any) => {
         throw error;
     }
 };
+
