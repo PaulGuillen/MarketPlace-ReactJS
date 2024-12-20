@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { fetchCategories } from "../../../features/client/services/HomeService";
+import { fetchCategories } from "../../../../features/client/services/HomeService";
 import { Categories } from "features/model/Categories";
-import "../../../styles/Category.css";
+import "../../../../styles/Category.css";
 
 interface CategoryProps {
   onCategorySelect: (category: Categories) => void;

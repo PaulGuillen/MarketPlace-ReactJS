@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { fetchVirals } from '../services/HomeService';
-import '../../../styles/ViralSection.css';
-import { Product } from '../../model/Product';
+import { useEffect, useState } from 'react';
+import { fetchVirals } from '../../services/HomeService';
+import '../../../../styles/ViralSection.css';
+import { Product } from '../../../model/Product';
 
 const ViralSection = () => {
   const [viralProducts, setViralProducts] = useState<Product[]>([]);

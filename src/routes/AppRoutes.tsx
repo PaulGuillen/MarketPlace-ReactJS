@@ -8,6 +8,7 @@ import Login from "../features/auth/pages/login/Login";
 import AccountSettings from "../features/auth/pages/client/settings/AccountSettings";
 import RegisterBusiness from "../features/auth/pages/business/register/RegisterBusiness";
 import Register from "../features/auth/pages/client/register/Register";
+import ProductDetail from "../features/client/components/product/ProductDetail";
 
 const AppRoutes = () => {
   return (
@@ -25,6 +26,8 @@ const AppRoutes = () => {
       <Route path="/company" element={<Company />} />
       <Route path="/products-business" element={<Product />} />
       <Route path="/orders-business" element={<Order />} />
+
+      <Route path="/product-detail" element={<ProductDetail />} />
     </Routes>
   );
 };

@@ -1,4 +1,3 @@
-
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../../../config/firebaseConfig";
 import { CarouselImage } from "../../model/CarouselImage";

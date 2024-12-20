@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../store/store";
-import logoMarket from "../../../assets/logo_market.png";
-import favouriteIcon from "../../../assets/icon_favourite.png";
-import shoppingIcon from "../../../assets/icon_shopping.png";
-import "../../../styles/NavbarHome.css";
-import { getUserRole, handleUserLogout } from "../services/HomeService";
+import { RootState } from "../../../../store/store";
+import logoMarket from "../../../../assets/logo_market.png";
+import favouriteIcon from "../../../../assets/icon_favourite.png";
+import shoppingIcon from "../../../../assets/icon_shopping.png";
+import "../../../../styles/NavbarHome.css";
+import { getUserRole, handleUserLogout } from "../../services/HomeService";
 
 const NavBarHome = () => {
   const navigate = useNavigate();

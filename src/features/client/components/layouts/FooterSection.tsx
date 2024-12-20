@@ -1,5 +1,4 @@
-import React from "react";
-import "../../../styles/FooterSection.css";
+import "../../../../styles/FooterSection.css";
 
 const FooterSection = () => {
   return (

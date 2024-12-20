@@ -1,11 +1,10 @@
 {
-  
   "compilerOptions": {
-    "jsx": "react-jsx",  // Cambia esto a react-jsx para soportar JSX sin necesidad de importar React
+    "jsx": "react-jsx",  
     "esModuleInterop": true, 
     "allowSyntheticDefaultImports": true,
-    "strict": false, // Desactiva todas las opciones de chequeo estricto
-    "noImplicitAny": false, // Desactiva errores para tipos "any" implícitos
+    "strict": false, 
+    "noImplicitAny": false, 
     "target": "es5",
     "module": "esnext",
     "moduleResolution": "node",

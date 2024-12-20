@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { fetchStores } from "../../client/services/HomeService";
-import { Store } from "../../model/Store";
-import "../../../styles/StoreSection.css";
-import Divider from "../../../components/divider/Divider";
+import { fetchStores } from "../../services/HomeService";
+import { Store } from "../../../model/Store";
+import "../../../../styles/StoreSection.css";
+import Divider from "../../../../components/divider/Divider";
 
 const StoresSection = () => {
   const [stores, setStores] = useState<Store[]>([]);

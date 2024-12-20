@@ -1,4 +1,3 @@
-// src/components/Divider.tsx
 import React from "react";
 
 interface DividerProps {

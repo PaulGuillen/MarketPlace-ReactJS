@@ -1,16 +1,15 @@
 import "./Home.css";
-import NavBarHome from "../../components/NavBarHome";
+import NavBarHome from "../../../client/components/layouts/NavBarHome";
 import IconSection from "../../components/IconSection";
-import Category from "../../components/Category";
+import Category from "../../components/category/Category";
 import BannerSection from "../../components/BannerSection";
 import { Categories } from "../../../model/Categories";
-import StoresSection from "../../components/StoresSection";
-import BestSellersSection from "../../components/BestSellersSection";
-import ViralSection from "../../components/ViralSection";
-import FooterSection from "../../components/FooterSection";
+import StoresSection from "../../components/store/StoresSection";
+import BestSellersSection from "../../components/product/BestSellersSection";
+import ViralSection from "../../components/product/ViralSection";
+import FooterSection from "../../components/layouts/FooterSection";
 
 const Home = () => {
-  
   const handleCategorySelect = (selectedCategory: Categories) => {
     console.log("Selected Category:", selectedCategory);
   };
