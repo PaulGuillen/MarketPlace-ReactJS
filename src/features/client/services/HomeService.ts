@@ -8,6 +8,8 @@ import { getAuth, signOut } from "firebase/auth";
 import { clearUser } from "../../../store/authSlice";
 import { Dispatch } from "react";
 import { clearUids } from "../../../store/businessSlice";
+import { UserBusiness } from "features/model/UserBusiness";
+import { auth } from "../../../config/firebaseConfig";
 
 export const getUserRole = async (userId: string): Promise<string> => {
   try {
@@ -93,5 +95,53 @@ export const fetchVirals = async (): Promise<Product[]> => {
   } catch (error) {
     console.error("Error fetching virals products: ", error);
     return [];
+  }
+};
+
+export const processPayment = async (paymentData: {
+  payment_method_types: string[];
+  amount: number;
+  currency: string;
+  orderID: string;
+  fullName: string;
+  phone: string;
+  email: string;
+  address: string;
+}): Promise<{ clientSecret?: string; error?: string }> => {
+  try {
+    const response = await fetch("http://192.168.100.13:3000/payment/paying", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(paymentData),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      return { clientSecret: data.clientSecret };
+    } else {
+      return { error: data.error || "Error desconocido" };
+    }
+  } catch (error) {
+    console.error("Error en el servicio de pago:", error);
+    return { error: "Error al conectar con el servidor" };
+  }
+};
+
+export const fetchUserData = async (): Promise<UserBusiness | null> => {
+  try {
+      const user = auth.currentUser;
+      if (user) {
+          const userDoc = await getDoc(doc(db, "users", user.uid));
+          if (userDoc.exists()) {
+              return userDoc.data() as UserBusiness;
+          }
+      }
+      return null;
+  } catch (error) {
+      console.error("Error fetching user data:", error);
+      throw error;
   }
 };
