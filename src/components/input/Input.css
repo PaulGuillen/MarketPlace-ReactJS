@@ -5,17 +5,16 @@
 
 .input-group input {
   width: 100%;
-  padding: 8px 5px;  /* Ajustamos el padding para que el texto esté mejor alineado */
+  padding: 8px 5px;  
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
   background-color: transparent;
   box-sizing: border-box;
-  line-height: 1.5; /* Asegura que el texto tenga una buena altura de línea */
-  color: black; /* Color del texto*/
+  line-height: 1.5; 
+  color: black; 
 }
 
-/* Cambiamos el color del placeholder a negro */
 .input-group input::placeholder {
   color: black;
   opacity: 1;
@@ -43,19 +42,18 @@
   border-color: #74ab5c;
 }
 
-/* Eliminar el estilo de autocompletado */
 input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 1000px #f4f4f4 inset !important; /* Evita el fondo gris */
-    box-shadow: 0 0 0 1000px #f4f4f4 inset !important; /* Evita el fondo gris */
-    -webkit-text-fill-color: black !important; /* Asegúrate de que el texto sea negro */
-    border-color: #74ab5c !important; /* Mantén el borde verde */
+    -webkit-box-shadow: 0 0 0 1000px #f4f4f4 inset !important; 
+    box-shadow: 0 0 0 1000px #f4f4f4 inset !important; 
+    -webkit-text-fill-color: black !important; 
+    border-color: #74ab5c !important; 
 }
 
 .input-group input:-webkit-autofill + label {
     top: -20px;
     left: 5px;
     font-size: 12px;
-    color: #74ab5c; /* Estilo para el label flotante */
+    color: #74ab5c;
 }
 
   

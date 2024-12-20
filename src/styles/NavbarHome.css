@@ -82,7 +82,6 @@
     width: 24px;
 }
 
-/* Media Queries */
 @media (max-width: 768px) {
     .navbar {
         padding: 10px;
@@ -132,7 +131,6 @@
     }
 }
 
-/* Dropdown and Submenu Styling */
 .user-dropdown {
     position: relative;
     cursor: pointer;
@@ -174,10 +172,8 @@
     border-left: 4px solid #007e3a;
 }
 
-/* Submenu specific styling */
 .submenu {
     right: 100%;
-    /* Aligns submenu to the left of the parent */
     top: 0;
     width: 200px;
 }

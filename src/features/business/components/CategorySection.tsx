@@ -2,9 +2,8 @@ import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { RootState } from "../../../store/store";
 import "../../../styles/business/CategorySection.css";
-import { collection, addDoc, doc, updateDoc, getDocs, query, where } from "firebase/firestore";
-import { db } from "../../../config/firebaseConfig";
 import ProgressLoading from "../../../components/progress-loading/ProgressLoading";
+import { fetchCategoriesByUser, addCategory } from "../services/Product";
 
 const CategorySection = () => {
   const { userUid, businessUid } = useSelector(
@@ -20,19 +19,10 @@ const CategorySection = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const loadCategories = async () => {
       setLoading(true);
       try {
-        const q = query(
-          collection(db, "categoriesProduct"),
-          where("userUid", "==", userUid)
-        );
-        const querySnapshot = await getDocs(q);
-        const categoriesData = querySnapshot.docs.map((doc) => ({
-          categoryUid: doc.id,
-          ...doc.data(),
-        })) as { categoryUid: string; name: string; type: string }[];
-        
+        const categoriesData = await fetchCategoriesByUser(userUid);
         setCategories(categoriesData);
       } catch (error) {
         console.error("Error al cargar las categorías: ", error);
@@ -41,7 +31,7 @@ const CategorySection = () => {
       }
     };
 
-    fetchCategories();
+    loadCategories();
   }, [userUid]);
 
   const handleAddCategory = async () => {
@@ -51,22 +41,12 @@ const CategorySection = () => {
     setShowDialog(false);
 
     try {
-      const docRef = await addDoc(collection(db, "categoriesProduct"), {
-        name: newCategoryName,
-        type: newCategoryType,
+      const newCategoryItem = await addCategory(
+        newCategoryName,
+        newCategoryType,
         userUid,
-        businessUid,
-      });
-
-      await updateDoc(doc(db, "categoriesProduct", docRef.id), {
-        categoryUid: docRef.id,
-      });
-
-      const newCategoryItem = {
-        categoryUid: docRef.id,
-        name: newCategoryName,
-        type: newCategoryType,
-      };
+        businessUid
+      );
       setCategories((prevCategories) => [...prevCategories, newCategoryItem]);
       setNewCategoryName("");
       setNewCategoryType("");

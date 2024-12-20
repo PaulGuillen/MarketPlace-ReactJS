@@ -2,7 +2,7 @@ import React from 'react';
 import './BackButton.css';
 
 interface BackButtonProps {
-  onClick?: () => void; // Función que se ejecutará al hacer clic
+  onClick?: () => void; 
 }
 
 const BackButton: React.FC<BackButtonProps> = ({ onClick }) => {
