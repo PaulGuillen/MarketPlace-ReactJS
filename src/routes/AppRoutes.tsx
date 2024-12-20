@@ -9,6 +9,7 @@ import AccountSettings from "../features/auth/pages/client/settings/AccountSetti
 import RegisterBusiness from "../features/auth/pages/business/register/RegisterBusiness";
 import Register from "../features/auth/pages/client/register/Register";
 import ProductDetail from "../features/client/components/product/ProductDetail";
+import ProductBag from "../features/client/components/bag/ProductBag";
 
 const AppRoutes = () => {
   return (
@@ -28,6 +29,7 @@ const AppRoutes = () => {
       <Route path="/orders-business" element={<Order />} />
 
       <Route path="/product-detail" element={<ProductDetail />} />
+      <Route path="/product-bag" element={<ProductBag />} />
     </Routes>
   );
 };

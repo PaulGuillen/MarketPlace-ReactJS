@@ -32,7 +32,11 @@ const NavBarHome = () => {
   const handleLogout = () => {
     handleUserLogout(dispatch);
   };
-  
+
+  const handleProductBagClick = () => {
+    navigate(`/product-bag`);
+  };
+
   return (
     <header className="navbar">
       <div className="navbar-left">
@@ -92,8 +96,12 @@ const NavBarHome = () => {
                     Regístrate
                     {isRegisterSubmenuVisible && (
                       <div className="submenu">
-                        <span onClick={() => navigate("/registerClient")}>Regístrate como Cliente</span>
-                        <span onClick={() => navigate("/registerBusiness")}>Regístrate como Negocio</span>
+                        <span onClick={() => navigate("/registerClient")}>
+                          Regístrate como Cliente
+                        </span>
+                        <span onClick={() => navigate("/registerBusiness")}>
+                          Regístrate como Negocio
+                        </span>
                       </div>
                     )}
                   </span>
@@ -107,7 +115,7 @@ const NavBarHome = () => {
           <img src={favouriteIcon} alt="Favorite" />
         </span>
         <span className="shopping-button icon">
-          <img src={shoppingIcon} alt="Shopping" />
+          <img src={shoppingIcon} alt="Shopping" onClick={handleProductBagClick} />
         </span>
       </div>
     </header>
