@@ -67,7 +67,7 @@ const BestSellersSection = () => {
               <button
                 className="add-to-cart-button"
                 onClick={(e) => {
-                  e.stopPropagation(); // Para evitar que navegue al detalle
+                  e.stopPropagation();
                   handleAddToCart(item);
                 }}
               >

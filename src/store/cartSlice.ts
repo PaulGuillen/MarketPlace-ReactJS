@@ -25,7 +25,6 @@ const cartSlice = createSlice({
                     existingItem.quantity += 1;
                 }
             } else {
-                // Inicializa `quantity` con 1 si no existe en el carrito
                 state.items.push({ ...action.payload, quantity: 1 });
             }
         },

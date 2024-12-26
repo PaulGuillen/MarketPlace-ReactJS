@@ -10,6 +10,7 @@ import RegisterBusiness from "../features/auth/pages/business/register/RegisterB
 import Register from "../features/auth/pages/client/register/Register";
 import ProductDetail from "../features/client/components/product/ProductDetail";
 import ProductBag from "../features/client/components/bag/ProductBag";
+import PaymentOrder from "../features/client/components/order/PaymentOrder";
 
 const AppRoutes = () => {
   return (
@@ -30,6 +31,8 @@ const AppRoutes = () => {
 
       <Route path="/product-detail" element={<ProductDetail />} />
       <Route path="/product-bag" element={<ProductBag />} />
+      <Route path="/payment-order" element={<PaymentOrder />} />
+
     </Routes>
   );
 };
