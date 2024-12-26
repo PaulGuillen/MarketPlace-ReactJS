@@ -3,10 +3,13 @@ import { fetchBestSellers } from "../../services/HomeService";
 import "../../../../styles/BestSellersSections.css";
 import { Product } from "../../../model/Product";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../../store/cartSlice";
 
 const BestSellersSection = () => {
   const [bestSellers, setBestSellers] = useState<Product[]>([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const loadBestSellers = async () => {
@@ -20,6 +23,10 @@ const BestSellersSection = () => {
     navigate(`/product-detail`, { state: { product } });
   };
 
+  const handleAddToCart = (product: Product) => {
+    dispatch(addToCart(product));
+  };
+
   return (
     <section className="best-sellers-section">
       <h2>Los Más Vendidos</h2>
@@ -30,7 +37,11 @@ const BestSellersSection = () => {
             item.discount !== "0" && item.priceWithDiscount !== "0";
 
           return (
-            <div key={item.id} className="best-seller-card" onClick={() => handleProductClick(item)}>
+            <div
+              key={item.id}
+              className="best-seller-card"
+              onClick={() => handleProductClick(item)}
+            >
               <img
                 src={item.imageUrl}
                 alt={item.name}
@@ -53,7 +64,15 @@ const BestSellersSection = () => {
               {showDiscount && (
                 <span className="discount-badge">-{item.discount}%</span>
               )}
-              <button className="add-to-cart-button">Agregar al carrito</button>
+              <button
+                className="add-to-cart-button"
+                onClick={(e) => {
+                  e.stopPropagation(); // Para evitar que navegue al detalle
+                  handleAddToCart(item);
+                }}
+              >
+                Agregar al carrito
+              </button>
             </div>
           );
         })}
