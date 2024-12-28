@@ -40,26 +40,25 @@ const ProductBag = () => {
   return (
     <div className="container mx-auto px-4 py-6">
       {cartItems.length === 0 ? (
-        <div className="flex justify-center items-center h-screen">
-          <div className="bg-white shadow-lg rounded-lg p-8 flex flex-col items-center text-center border border-gray-200">
-            <img
-              src={bolsaDeLaTienda}
-              alt="Carrito vacío"
-              className="w-48 h-48 object-contain mb-6"
-            />
-            <h2 className="text-2xl font-bold text-gray-700 mb-2">
-              Ohhh... Tu carrito está vacío
-            </h2>
-            <p className="text-gray-500 mb-6">
-              ¡Pero no tiene por qué estarlo! Agrega productos y disfruta.
-            </p>
-            <button
-              onClick={() => navigate("/")}
-              className="bg-blue-500 text-white font-semibold py-2 px-6 rounded-full hover:bg-blue-600 transition duration-200"
-            >
-              Comprar Ahora
-            </button>
-          </div>
+        <div className="flex flex-col items-center justify-center h-screen">
+          <img
+            src={bolsaDeLaTienda}
+            alt="Carrito vacío"
+            className="w-40 h-40 object-contain mb-6"
+          />
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">
+            Tu carrito está vacío
+          </h2>
+          <p className="text-gray-600 mb-6 text-center">
+            ¡No te preocupes! Explora nuestros productos y llena tu carrito con
+            lo que más te guste.
+          </p>
+          <button
+            onClick={() => navigate("/")}
+            className="bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-600 transition duration-200"
+          >
+            Comprar Ahora
+          </button>
         </div>
       ) : (
         <div>
@@ -157,8 +156,10 @@ const ProductBag = () => {
                   S/ {(calculateTotal() + 5).toFixed(2)}
                 </span>
               </div>
-              <button className="w-full bg-black text-white py-2 rounded hover:bg-gray-800"
-              onClick={handleProductClick}>
+              <button
+                className="w-full bg-black text-white py-2 rounded hover:bg-gray-800"
+                onClick={handleProductClick}
+              >
                 Pagar Ahora
               </button>
             </div>
