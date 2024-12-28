@@ -25,6 +25,10 @@ const ProductBag = () => {
     dispatch(decreaseQuantity(id));
   };
 
+  const handleProductClick = () => {
+    navigate(`/payment-order`, { state: { cartItems } });
+  };
+
   const calculateTotal = () => {
     return cartItems.reduce((total, item) => {
       const price = parseFloat(item.price || "0");
@@ -72,7 +76,9 @@ const ProductBag = () => {
                       Cantidad
                     </th>
                     <th className="px-4 py-2 text-left text-gray-600">Total</th>
-                    <th className="px-4 py-2 text-left text-gray-600">Acción</th>
+                    <th className="px-4 py-2 text-left text-gray-600">
+                      Acción
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -151,7 +157,8 @@ const ProductBag = () => {
                   S/ {(calculateTotal() + 5).toFixed(2)}
                 </span>
               </div>
-              <button className="w-full bg-black text-white py-2 rounded hover:bg-gray-800">
+              <button className="w-full bg-black text-white py-2 rounded hover:bg-gray-800"
+              onClick={handleProductClick}>
                 Pagar Ahora
               </button>
             </div>
