@@ -1,13 +1,18 @@
 import ProgressLoading from "../../../../components/progress-loading/ProgressLoading";
+import StatusCard from "../../../../components/status-card/StatusCard"; // Importa el StatusCard
 import { fetchUserData, processPayment } from "../../services/HomeService";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const PaymentOrder = () => {
   const location = useLocation();
   const { cartItems } = location.state || { cartItems: [] };
   const [loading, setLoading] = useState(false);
   const [userFetch, setUserFetch] = useState(null);
+  const [paymentStatus, setPaymentStatus] = useState<
+    "success" | "error" | null
+  >(null); // Nuevo estado para el status del pago
+  const navigate = useNavigate();
 
   const fetchUser = async () => {
     try {
@@ -59,11 +64,40 @@ const PaymentOrder = () => {
     setLoading(false);
 
     if (result.clientSecret) {
-      alert("Pago exitoso. ClientSecret: " + result.clientSecret);
+      setPaymentStatus("success");
     } else if (result.error) {
-      alert("Error en el pago: " + result.error);
+      setPaymentStatus("error");
     }
   };
+
+  const handleStatusCardClick = () => {
+    if (paymentStatus === "success") {
+      navigate("/home");
+    } else {
+      alert("Intenta nuevamente.");
+      setPaymentStatus(null);
+    }
+  };
+
+  if (paymentStatus) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-gray-100">
+        <StatusCard
+          status={paymentStatus}
+          title={paymentStatus === "success" ? "¡Éxito!" : "¡Error!"}
+          message={
+            paymentStatus === "success"
+              ? "Tu pago se ha procesado correctamente. Gracias por tu compra."
+              : "Hubo un problema procesando tu pago. Por favor, inténtalo de nuevo."
+          }
+          buttonText={
+            paymentStatus === "success" ? "Volver al inicio" : "Reintentar"
+          }
+          onClick={handleStatusCardClick}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-8 min-h-screen relative">
@@ -104,7 +138,9 @@ const PaymentOrder = () => {
           <div className="mt-6">
             <div className="flex justify-between mb-2">
               <span className="text-gray-500">Subtotal</span>
-              <span className="font-semibold">S/ {calculateTotal().toFixed(2)}</span>
+              <span className="font-semibold">
+                S/ {calculateTotal().toFixed(2)}
+              </span>
             </div>
             <div className="flex justify-between mb-2">
               <span className="text-gray-500">Envío</span>
@@ -116,7 +152,7 @@ const PaymentOrder = () => {
             </div>
           </div>
         </div>
-  
+
         {/* Detalles del pago */}
         <div className="bg-white rounded-lg shadow-lg p-6">
           <h2 className="text-2xl font-semibold mb-4">Detalles del Pago</h2>
@@ -130,7 +166,9 @@ const PaymentOrder = () => {
           </div>
           <form>
             <div className="mb-4">
-              <label className="block text-gray-600 mb-2">Titular de la tarjeta</label>
+              <label className="block text-gray-600 mb-2">
+                Titular de la tarjeta
+              </label>
               <input
                 type="text"
                 className="border rounded-md w-full py-2 px-4"
@@ -138,7 +176,9 @@ const PaymentOrder = () => {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-gray-600 mb-2">Número de tarjeta</label>
+              <label className="block text-gray-600 mb-2">
+                Número de tarjeta
+              </label>
               <input
                 type="text"
                 className="border rounded-md w-full py-2 px-4"
@@ -147,7 +187,9 @@ const PaymentOrder = () => {
             </div>
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div>
-                <label className="block text-gray-600 mb-2">Fecha de expiración</label>
+                <label className="block text-gray-600 mb-2">
+                  Fecha de expiración
+                </label>
                 <input
                   type="text"
                   className="border rounded-md w-full py-2 px-4"
@@ -165,7 +207,9 @@ const PaymentOrder = () => {
             </div>
             <div className="flex items-center mb-6">
               <input type="checkbox" className="mr-2" />
-              <span className="text-gray-600">Guardar información para el futuro</span>
+              <span className="text-gray-600">
+                Guardar información para el futuro
+              </span>
             </div>
             <button
               className="bg-blue-500 text-white rounded-md px-4 py-2 w-full font-semibold"
@@ -179,7 +223,6 @@ const PaymentOrder = () => {
       </div>
     </div>
   );
-  
 };
 
 export default PaymentOrder;
