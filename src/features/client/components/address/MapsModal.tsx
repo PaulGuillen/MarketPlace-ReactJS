@@ -21,7 +21,6 @@ const MapsModal: React.FC<MapsModalProps> = ({ visible, onClose, onSelect }) => 
     const { lng, lat } = event.lngLat;
     setSelectedCoordinates({ lat, lng });
 
-    // Obtener dirección usando OpenStreetMap
     try {
       const response = await fetch(
         `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`
@@ -39,12 +38,40 @@ const MapsModal: React.FC<MapsModalProps> = ({ visible, onClose, onSelect }) => 
     if (visible && mapContainerRef.current && !mapRef.current) {
       mapRef.current = new maplibregl.Map({
         container: mapContainerRef.current,
-        style: "https://demotiles.maplibre.org/style.json", // URL del estilo MapLibre
-        center: [-77.0428, -12.0464], // Coordenadas iniciales (Lima, Perú)
-        zoom: 12,
+        style: "https://demotiles.maplibre.org/style.json",
+        center: [-77.0428, -12.0464], 
+        zoom: 8, // Nivel de zoom
       });
 
       mapRef.current.on("click", handleMapClick);
+
+
+      mapRef.current.on("load", () => {
+        mapRef.current?.addSource("districts", {
+          type: "geojson",
+          data: "/path-to-your-districts-geojson-file/districts.geojson", 
+        });
+
+        mapRef.current?.addLayer({
+          id: "districts-fill",
+          type: "fill",
+          source: "districts",
+          paint: {
+            "fill-color": "#888888", 
+            "fill-opacity": 0.4, 
+          },
+        });
+
+        mapRef.current?.addLayer({
+          id: "districts-outline",
+          type: "line",
+          source: "districts",
+          paint: {
+            "line-color": "#000000",
+            "line-width": 1,
+          },
+        });
+      });
     }
 
     return () => {
