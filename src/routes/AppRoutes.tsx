@@ -13,6 +13,7 @@ const Order = React.lazy(() => import("../features/business/pages/management/ord
 const ProductDetail = React.lazy(() => import("../features/client/components/product/ProductDetail"));
 const ProductBag = React.lazy(() => import("../features/client/components/bag/ProductBag"));
 const PaymentOrder = React.lazy(() => import("../features/client/components/order/PaymentOrder"));
+const SelectAddress = React.lazy(() => import("../features/client/components/address/Address"));
 
 const AppRoutes = () => {
   return (
@@ -31,6 +32,7 @@ const AppRoutes = () => {
         <Route path="/product-detail" element={<ProductDetail />} />
         <Route path="/product-bag" element={<ProductBag />} />
         <Route path="/payment-order" element={<PaymentOrder />} />
+        <Route path="/select-address" element={<SelectAddress />} />
       </Routes>
     </Suspense>
   );

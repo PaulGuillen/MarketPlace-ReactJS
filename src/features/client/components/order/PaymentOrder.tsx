@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import ProgressLoading from "../../../../components/progress-loading/ProgressLoading";
-import StatusCard from "../../../../components/status-card/StatusCard"; // Importa el StatusCard
+import StatusCard from "../../../../components/status-card/StatusCard";
+import MapsModal from "../address/MapsModal";
 import { processPayment } from "../../services/HomeService";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -21,8 +22,16 @@ const PaymentOrder = () => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
+  const [isMapsModalVisible, setIsMapsModalVisible] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (location.state?.selectedAddress) {
+      setAddress(location.state.selectedAddress);
+      console.log("Coordenadas:", location.state.selectedCoordinates);
+    }
+  }, [location.state]);
 
   const calculateTotal = () => {
     return cartItems.reduce((total, item) => {
@@ -33,9 +42,8 @@ const PaymentOrder = () => {
   };
 
   const handleConfirmPayment = async (e: React.FormEvent) => {
-    e.preventDefault(); // Prevenir recarga de la página
+    e.preventDefault();
 
-    // Validar que todos los campos estén llenos
     if (!fullName || !phone || !email || !address) {
       alert("Por favor, completa todos los campos antes de continuar.");
       return;
@@ -43,7 +51,7 @@ const PaymentOrder = () => {
 
     const paymentData = {
       payment_method_types: ["card"],
-      amount: (calculateTotal() + 5) * 100, // Total en centavos incluyendo envío
+      amount: (calculateTotal() + 5) * 100,
       currency: "PEN",
       orderID: `ORD-${Date.now()}`,
       fullName,
@@ -75,12 +83,26 @@ const PaymentOrder = () => {
   const handleStatusCardClick = () => {
     if (paymentStatus === "success") {
       dispatch(clearCart());
-      localStorage.removeItem("cartItems"); // E
+      localStorage.removeItem("cartItems");
       navigate("/home");
     } else {
       alert("Intenta nuevamente.");
       setPaymentStatus(null);
     }
+  };
+
+  const openMapsModal = () => {
+    setIsMapsModalVisible(true);
+  };
+
+  const closeMapsModal = () => {
+    setIsMapsModalVisible(false);
+  };
+
+  const handleSelectAddress = (selectedAddress, selectedCoordinates) => {
+    setAddress(selectedAddress);
+    console.log("Coordenadas seleccionadas:", selectedCoordinates);
+    closeMapsModal();
   };
 
   if (paymentStatus) {
@@ -110,7 +132,6 @@ const PaymentOrder = () => {
         Carrito &gt; Pedido &gt; <span className="text-blue-600">Pago</span>
       </h1>
       <div className="grid lg:grid-cols-3 gap-8">
-        {/* Sección Tu Orden */}
         <div className="lg:col-span-1">
           <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
             <h2 className="text-2xl font-semibold mb-4">Tu Orden</h2>
@@ -127,8 +148,7 @@ const PaymentOrder = () => {
                   <p className="font-medium">Cantidad: {item.quantity}</p>
                 </div>
                 <p className="ml-auto font-semibold">
-                  S/{" "}
-                  {(item.quantity * parseFloat(item.price || "0")).toFixed(2)}
+                  S/ {(item.quantity * parseFloat(item.price || "0")).toFixed(2)}
                 </p>
               </div>
             ))}
@@ -150,7 +170,6 @@ const PaymentOrder = () => {
             </div>
           </div>
 
-          {/* Nueva Tarjeta para Información Personal */}
           <div className="bg-white rounded-lg shadow-lg p-6">
             <h2 className="text-xl font-semibold mb-4">Información Personal</h2>
             <form>
@@ -178,19 +197,28 @@ const PaymentOrder = () => {
               </div>
               <div className="mb-4">
                 <label className="block text-gray-600 mb-2">Dirección</label>
-                <input
-                  type="text"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  className="border rounded-md w-full py-2 px-4"
-                  placeholder="Dirección de envío"
-                />
+                <div className="flex items-center">
+                  <input
+                    type="text"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    className="border rounded-md w-full py-2 px-4"
+                    placeholder="Dirección de envío"
+                    readOnly
+                  />
+                  <button
+                    type="button"
+                    className="ml-2 bg-blue-500 text-white rounded-md px-3 py-2"
+                    onClick={openMapsModal}
+                  >
+                    Seleccionar dirección
+                  </button>
+                </div>
               </div>
             </form>
           </div>
         </div>
 
-        {/* Detalles del Pago */}
         <div className="lg:col-span-2 bg-white rounded-lg shadow-lg p-6 max-h-fit">
           <h2 className="text-2xl font-semibold mb-4">Detalles del Pago</h2>
           <div className="flex space-x-4 mb-6">
@@ -261,6 +289,12 @@ const PaymentOrder = () => {
           </form>
         </div>
       </div>
+
+      <MapsModal
+        visible={isMapsModalVisible}
+        onClose={closeMapsModal}
+        onSelect={handleSelectAddress}
+      />
     </div>
   );
 };
